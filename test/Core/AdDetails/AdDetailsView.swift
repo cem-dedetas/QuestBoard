@@ -6,8 +6,19 @@
 //
 
 import SwiftUI
+import MapKit
+import Foundation
 
 struct AdDetailsView: View {
+    
+    func getDateFromString(_ dateString: String) -> Date? {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+            dateFormatter.timeZone = TimeZone(identifier: "UTC") // Set the appropriate time zone
+            
+            return dateFormatter.date(from: dateString)
+        }
+    
     var adId:String;
     @ObservedObject var advertvm:SingleAdvertViewModel;
     @State var currentImageIndex:Int = 0
@@ -17,52 +28,100 @@ struct AdDetailsView: View {
         advertvm = SingleAdvertViewModel(adId: adId)
     }
     var body: some View {
-        VStack {
-            if advertvm.isLoading {
-                ProgressView("Loading...")
-            } 
-            else {
-                if !advertvm.errorMessage.isEmpty {
-                    Text(advertvm.errorMessage)
-                        .foregroundColor(.red)
-                }
-                else{
-                    VStack(alignment: .leading){
-                        Section{
-                            Text(advertvm.advert.title).font(.title)
-                            Text(advertvm.advert.description)
-                        }
-                        Divider()
-                        Section{
-                            Text(advertvm.advert.phone)
-                            Text(advertvm.advert.email)
-                        }
-                        Spacer()
-                        Divider()
-                        Text("Map here")
-                        Divider()
-                        Section{
-                            ImageCarouselView(index: $currentImageIndex, items: advertvm.advert.imgURLs){ photoUrl in
-                                GeometryReader{proxy in
-                                    let size = proxy.size
-                                    ImageLoader(from: photoUrl, width:size.width)
+        ScrollView(.vertical) {
+            VStack {
+                if advertvm.isLoading {
+                    ProgressView("Loading...")
+                } 
+                else {
+                    if !advertvm.errorMessage.isEmpty {
+                        Text(advertvm.errorMessage)
+                            .foregroundColor(.red)
+                    }
+                    else{
+                        VStack(alignment: .leading){
+                            
+                            if !advertvm.advert.imgURLs.isEmpty {
+                                ImageCarouselView(index: $currentImageIndex, items: advertvm.advert.imgURLs){ photoUrl in
+                                    VStack{
+                                        GeometryReader{proxy in
+                                            let size = proxy.size
+                                            ImageLoader(from: photoUrl, width:size.width)
+                                        }
+                                    }
+                                    
+                                }.frame(height: 300)
+                            }
+                            Section{
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Text(advertvm.advert.title).font(.title)
+                                    
+                                    Text("\(enumStrings[advertvm.advert.adType.rawValue])").foregroundStyle(.gray)
+                                    }.padding(.horizontal)
+                                    Spacer()
+                                    if let address = advertvm.advert.address {
+                                        VStack(alignment: .trailing) {
+                                            Text(address.country)
+                                            
+                                            Text("\(address.city) / \(address.town)").foregroundStyle(.gray)
+                                        }.padding(.horizontal)
+                                    }
+                                }
+                            }
+                            Divider()
+                            Section{
+                                Text(advertvm.advert.description).italic().padding()
+                            }
+                            Divider()
+                            ZStack {
+                                Map(initialPosition: .camera(.init(centerCoordinate: advertvm.advert.location2d, distance: 2500)),
+                                    interactionModes: []
+                                ){
+                                    Marker(advertvm.advert.title, systemImage: "chevron.down", coordinate: advertvm.advert.location2d)
+                                }
+                            .frame(height: 300)
+                                LinearGradient(gradient: Gradient(colors: [Color.black.opacity(0.3), Color.clear]), startPoint: .top, endPoint: .bottom)
+                                                .frame(height: 300)
+                                VStack {
+                                    NavigationLink{
+                                        DetailMapView(location: advertvm.advert.location2d, label:advertvm.advert.title)
+                                    } label :{
+                                        HStack {
+                                            Text("Show in map")
+                                            Image(systemName: "chevron.right")
+                                        }
+                                        .padding()
+                                        .background(.regularMaterial)
+                                        .clipShape(.capsule)
+                                    }.padding(.top,25)
+                                    Spacer()
                                 }
                                 
                             }
-                        } header:{
-                            Text("Images")
+                            Divider()
+                            Section{
+                                Button{
+                                    
+                                } label : {
+                                    HStack {
+                                        Text("Get in contact")
+                                        Image(systemName: "phone")
+                                        Image(systemName: "envelope")
+                                    }
+                                }
+                            }.padding()
+                            Divider()
                         }
-                        Divider()
-                        Spacer()
                     }
                 }
             }
-        }
-        .onAppear {
-            advertvm.fetchData()
-        }
-        .navigationBarTitle(advertvm.advert.title)
+            .onAppear {
+                advertvm.fetchData()
+            }
+            .navigationBarTitle(advertvm.advert.title)
         .navigationBarTitleDisplayMode(.inline)
+        }.padding(.bottom, 50)
     }
 }
 

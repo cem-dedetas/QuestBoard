@@ -25,7 +25,7 @@ struct CreateAdView: View {
     
     @StateObject var viewModel = SingleAdvertViewModel()
     
-    var enumStrings: [String] = ["Real Estate", "Vehicle","Other"]
+    
     @State var title:String = ""
     @State var description:String = ""
     @State var phone:String = ""
@@ -33,7 +33,7 @@ struct CreateAdView: View {
     @State var adType:AdvertTypeEnum = .realEstate
     @State var coord = CLLocationCoordinate2D(latitude: 41.03322, longitude: 29.00000)
     @State var isLocationSet:Bool = false
-    @State var address:CLPlacemark? = nil
+    @State var placemark:CLPlacemark? = nil
     @State var filesUploaded:Bool = false
     
     @State private var isImageUploadView = false
@@ -70,13 +70,13 @@ struct CreateAdView: View {
                 
                 Section {
                     NavigationLink{
-                        SelectLocationView(coord:$coord, isSet: $isLocationSet, address: $address)
+                        SelectLocationView(coord:$coord, isSet: $isLocationSet, address: $placemark)
                     } label:{
                         Text((isLocationSet) ? "Update Location" : "Select Location")
                     }
                     
-                    if let _address = address {
-                        Text("\(_address.name ?? "") \(_address.thoroughfare ?? ""), \(_address.locality ?? "") \(_address.administrativeArea ?? "") \(_address.postalCode ?? "") \(_address.country ?? "")")
+                    if let placemark = placemark {
+                        Text("\(placemark.name ?? "") \(placemark.thoroughfare ?? ""), \(placemark.locality ?? "") \(placemark.administrativeArea ?? "") \(placemark.postalCode ?? "") \(placemark.country ?? "")")
                     }
                     
                 }
@@ -93,15 +93,24 @@ struct CreateAdView: View {
         .navigationBarTitle("Create New Ad")
         .navigationBarItems(trailing:
             Button(action: {
-                Task{
-                    viewModel.uploadData(advertRequest: AdvertRequest(
-                        title: title,
-                        description: description,
-                        adType: adType,
-                        price: 99.0,
-                        email: email,
-                        phone: phone,
-                        location: Location(lat: coord.latitude, lon: coord.longitude)))
+                if let placemark = placemark{
+                    Task{
+                        viewModel.uploadData(advertRequest: AdvertRequest(
+                            title: title,
+                            description: description,
+                            adType: adType,
+                            price: 99.0,
+                            email: email,
+                            phone: phone,
+                            location: Location(lat: coord.latitude, lon: coord.longitude),
+                            address: Address(
+                                country: placemark.country ?? "N/A",
+                                zipCode: placemark.postalCode ?? "N/A",
+                                city: placemark.administrativeArea ?? "N/A",
+                                town: placemark.subAdministrativeArea ?? "N/A",
+                                rest: "\(placemark.thoroughfare ?? ""),  \(placemark.subThoroughfare ?? "")")))
+                            
+                    }
                 }
                 print("Submit button tapped")
             }) {

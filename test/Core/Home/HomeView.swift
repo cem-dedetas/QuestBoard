@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct HomeView: View {
+    
     @Binding var tabSelection:Int
     var body: some View {
         TabView(selection: $tabSelection) {
             MapView().tag(1)
-            Text("Tab Content 2").tag(2)
+            AdsListView().tag(2)
             MyAdsView().tag(3)
             Text("Tab Content 4").tag(4)
         }

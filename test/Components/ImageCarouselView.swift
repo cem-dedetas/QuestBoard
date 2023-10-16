@@ -10,8 +10,10 @@ struct ImageCarouselView<Content: View, T:Hashable>: View {
     
     @GestureState var offset:CGFloat = 0
     @State var currentIndex:Int = 0
+    @State var isFullscreen = false
+    @State var selectedContent:T?
     
-    init(spacing: CGFloat = 15, trailingSpace:CGFloat = 100,
+    init(spacing: CGFloat = 0, trailingSpace:CGFloat = 0,
          index:Binding<Int>, items:[T], @ViewBuilder content: @escaping (T) -> Content
     ){
         self.list = items
@@ -31,9 +33,17 @@ struct ImageCarouselView<Content: View, T:Hashable>: View {
                     
                     content(item)
                         .frame(width: proxy.size.width - trailingSpace)
+                        .clipped()
+                        .onTapGesture{
+                            isFullscreen.toggle()
+                        }
+                    
                     
                 }
-            }.padding(.horizontal, spacing)
+            }.sheet(isPresented: $isFullscreen){
+                FullscreenImageView(urls:list as! [String], selectedIndex:$currentIndex)
+            }
+            .padding(.horizontal, spacing)
                 .offset(x:offset + (currentIndex != 0 ? adjustmentWidth : 0) + (CGFloat(currentIndex) * -width))
                 .gesture(
                     DragGesture()
@@ -57,6 +67,17 @@ struct ImageCarouselView<Content: View, T:Hashable>: View {
                     
                 )
         }.animation(.easeInOut, value: offset == 0)
+            .frame(maxHeight: 300)
+            .overlay(alignment:.bottomTrailing){
+                Text("\(currentIndex+1) / \(list.count)")
+                    .foregroundStyle(Color.white)
+                    .padding(5)
+                    .padding(.horizontal, 5)
+                    .background(Color.secondary)
+                    .clipShape(Capsule())
+                    .padding()
+            }
+            
     }
 }
 
@@ -68,18 +89,22 @@ func ImageLoader(from url:String, width:CGFloat) -> some View {
                 .resizable()
                 .scaledToFit()
                 .frame(width:width)
+                .background(.gray)
             
         }
         else if phase.error != nil {
             Text("Could not load image")
                 .padding()
                 .background(.gray)
-                .frame(width:width, height:200)
+                .frame(width:width, height:300)
                 
         }
         else {
-            ProgressView()
+            ProgressView().frame(width:width, height:300)
         }
-    }
+    }.background(.gray)
+        
+    
+
 }
 

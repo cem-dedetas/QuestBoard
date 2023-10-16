@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreLocation
+import MapKit
 
 func convertCoordinatesToAddress(latitude: CLLocationDegrees, longitude: CLLocationDegrees, completionHandler: @escaping (CLPlacemark?) -> Void) {
     let location = CLLocation(latitude: latitude, longitude: longitude)
@@ -27,5 +28,36 @@ func convertCoordinatesToAddress(latitude: CLLocationDegrees, longitude: CLLocat
         } else {
             completionHandler(nil)
         }
+    }
+}
+
+func getEstimatedTime(to destionationLocation:CLLocationCoordinate2D, from currentLocation:CLLocationCoordinate2D) async -> String {
+    let request = MKDirections.Request()
+    request.source = MKMapItem(placemark: .init(coordinate: currentLocation))
+    request.destination = MKMapItem(placemark: .init(coordinate: destionationLocation))
+    request.transportType = .walking
+    
+    let result = try? await MKDirections(request: request).calculate()
+    if let result = result, let first = result.routes.first{
+//        print(first.expectedTravelTime)
+        return formatTimeInterval(first.expectedTravelTime)
+    }
+    return "--:--:--"
+}
+func formatTimeInterval(_ seconds: TimeInterval) -> String {
+    let hours = Int(seconds / 3600)
+    let minutes = Int((seconds.truncatingRemainder(dividingBy: 3600)) / 60)
+    let secondsRemainder = Int(seconds.truncatingRemainder(dividingBy: 60))
+    
+    if hours > 0 {
+        if minutes > 0 {
+            return "\(hours) hr \(minutes) min"
+        } else {
+            return "\(hours) hr"
+        }
+    } else if minutes > 0 {
+        return "\(minutes) min"
+    } else {
+        return "\(secondsRemainder) sec"
     }
 }

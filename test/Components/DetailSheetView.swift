@@ -8,25 +8,18 @@
 import SwiftUI
 
 struct DetailSheetView: View {
-    @Binding var advert:Advert
+    @Binding var advert:Advert?
+    @Binding var isAdDetailPresented:Bool
+    @Binding var routeDisplaying:Bool
     @State var sheetRatio = 0.60
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
-            NavigationView {
-                VStack{
-                    Spacer()
-                    Text(advert.title)
-                    Text(advert.description)
-                    Spacer()
-                    NavigationLink{
-                        AdDetailsView(adId:advert._id)
-                    } label:{
-                        Text("Open details fullscreen")
-                    }
-                    Spacer()
-                }.toolbar{
-                    ToolbarItem(placement: .topBarLeading){
+        
+    VStack {
+        if let advert = advert {
+                VStack(alignment:.leading){
+                    HStack(alignment:.top){
                         Button{
                             dismiss()
                         } label:{
@@ -35,17 +28,56 @@ struct DetailSheetView: View {
                                 Text("Back")
                             }
                         }
+                    Spacer()
+                        Button{
+                            dismiss()
+                            isAdDetailPresented.toggle()
+                        } label:{
+                            HStack{
+                                Text("Details")
+                                Image(systemName: "chevron.right")
+                            }
+                        }
+                    }.padding()
+                    Section{
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(advert.title).font(.title)
+                            
+                            Text("\(enumStrings[advert.adType.rawValue])").foregroundStyle(.gray)
+                            }.padding(.horizontal)
+                            Spacer()
+                            if let address = advert.address {
+                                VStack(alignment: .trailing) {
+                                    Text(address.country)
+                                    
+                                    Text("\(address.city) / \(address.town)").foregroundStyle(.gray)
+                                }.padding(.horizontal)
+                            }
+                        }
                     }
-                }
-                
+                    Section{
+                        Text(advert.description).lineLimit(3).italic().padding()
+                    }
+                    Section {
+                        Button{
+                            routeDisplaying = true
+                        } label: {
+                            Text("Get Directions").padding().background(.regularMaterial).clipShape(.capsule)
+                        }
+                    }
+                    Spacer()
+                }.navigationTitle(advert.title).navigationBarTitleDisplayMode(.inline)
+                .presentationDetents([.fraction(sheetRatio)])
                 
                 
             }
-            .presentationDetents([.fraction(sheetRatio)])
-
+            
+        }
+        
     }
 }
+    
 
-#Preview {
-    DetailSheetView(advert: .constant(Advert(id: UUID().uuidString, title: "AppleHQ", adType: AdvertTypeEnum.realEstate, description: "Description", price: 99, email: "cemdedetas@gmail.com", imgURLs: [""], phone: "+905555555", createdAt: Date().formatted(), location: Location(lat: 37.3317, lon: -122.0307))))
-}
+
+

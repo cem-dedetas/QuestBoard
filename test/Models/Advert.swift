@@ -16,6 +16,14 @@ enum AdvertTypeEnum: Int, Codable,CaseIterable {
     case other
 }
 
+struct Address: Codable {
+    let country:String
+    let zipCode:String
+    let city:String
+    let town:String
+    let rest:String
+}
+
 struct Advert: Codable{
     let _id: String
     let title: String
@@ -27,9 +35,10 @@ struct Advert: Codable{
     let phone: String
     let createdAt: String
     let location: Location
+    let address: Address?
 
     // Provide an initializer for the Advert struct
-    init(id: String, title: String, adType: AdvertTypeEnum, description: String, price: Int, email: String, imgURLs: [String], phone: String, createdAt: String, location: Location) {
+    init(id: String, title: String, adType: AdvertTypeEnum, description: String, price: Int, email: String, imgURLs: [String], phone: String, createdAt: String, location: Location, address: Address? = nil) {
         self._id = id
         self.title = title
         self.adType = adType
@@ -40,6 +49,7 @@ struct Advert: Codable{
         self.phone = phone
         self.createdAt = createdAt
         self.location = location
+        self.address = address
     }
 }
 
@@ -51,4 +61,7 @@ struct AdvertRequest: Codable {
     let email: String
     let phone: String
     let location: Location
+    let address: Address
 }
+
+public var enumStrings: [String] = ["Real Estate", "Vehicle","Other"]

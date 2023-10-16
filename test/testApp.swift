@@ -20,12 +20,12 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct testApp: App {
     @StateObject var authViewModel = AuthViewModel()
-
+    @StateObject var mapViewModel = MapViewModel()
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     var body: some Scene {
         WindowGroup {
-            ContentView().environmentObject(authViewModel)
+            ContentView().environmentObject(authViewModel).environmentObject(mapViewModel)
         }
     }
 }

@@ -16,11 +16,15 @@
 		AE1B170A2AA5FB51006563F1 /* testUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1B17092AA5FB51006563F1 /* testUITestsLaunchTests.swift */; };
 		AE23CD5F2ACEE4360012F50C /* iPhoneNumberField in Frameworks */ = {isa = PBXBuildFile; productRef = AE23CD5E2ACEE4360012F50C /* iPhoneNumberField */; };
 		AE23CD612ACEF81D0012F50C /* SelectLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE23CD602ACEF81D0012F50C /* SelectLocationView.swift */; };
+		AE30CCF22ADD701A007986EE /* AdsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE30CCF12ADD701A007986EE /* AdsListView.swift */; };
+		AE30CCF42ADD760B007986EE /* EstimatedTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE30CCF32ADD760B007986EE /* EstimatedTimeView.swift */; };
 		AE33A0302AD2EE0A0063C924 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE33A02F2AD2EE0A0063C924 /* ImagePicker.swift */; };
 		AE33A0322AD306790063C924 /* ImageUploadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE33A0312AD306790063C924 /* ImageUploadViewModel.swift */; };
 		AE3D8AF72AD43A48008A6FB2 /* ImageCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE3D8AF62AD43A48008A6FB2 /* ImageCarouselView.swift */; };
 		AE44433F2AD2B0260073C6A1 /* MapUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE44433E2AD2B0260073C6A1 /* MapUtils.swift */; };
 		AE4443422AD2EAB60073C6A1 /* AddImagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4443412AD2EAB60073C6A1 /* AddImagesView.swift */; };
+		AE5CC43A2AD5A773005158DB /* FullscreenImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5CC4392AD5A773005158DB /* FullscreenImageView.swift */; };
+		AE5CC43C2AD5CA7A005158DB /* DetailMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5CC43B2AD5CA7A005158DB /* DetailMapView.swift */; };
 		AE7474692AB84A8C00845729 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7474682AB84A8C00845729 /* LoginView.swift */; };
 		AE7474712AB879DE00845729 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7474702AB879DE00845729 /* InputView.swift */; };
 		AE7474732AB8AB1500845729 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7474722AB8AB1500845729 /* RegisterView.swift */; };
@@ -73,11 +77,15 @@
 		AE1B17072AA5FB51006563F1 /* testUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testUITests.swift; sourceTree = "<group>"; };
 		AE1B17092AA5FB51006563F1 /* testUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		AE23CD602ACEF81D0012F50C /* SelectLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLocationView.swift; sourceTree = "<group>"; };
+		AE30CCF12ADD701A007986EE /* AdsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsListView.swift; sourceTree = "<group>"; };
+		AE30CCF32ADD760B007986EE /* EstimatedTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstimatedTimeView.swift; sourceTree = "<group>"; };
 		AE33A02F2AD2EE0A0063C924 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		AE33A0312AD306790063C924 /* ImageUploadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUploadViewModel.swift; sourceTree = "<group>"; };
 		AE3D8AF62AD43A48008A6FB2 /* ImageCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCarouselView.swift; sourceTree = "<group>"; };
 		AE44433E2AD2B0260073C6A1 /* MapUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapUtils.swift; sourceTree = "<group>"; };
 		AE4443412AD2EAB60073C6A1 /* AddImagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddImagesView.swift; sourceTree = "<group>"; };
+		AE5CC4392AD5A773005158DB /* FullscreenImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenImageView.swift; sourceTree = "<group>"; };
+		AE5CC43B2AD5CA7A005158DB /* DetailMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMapView.swift; sourceTree = "<group>"; };
 		AE7474682AB84A8C00845729 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		AE7474702AB879DE00845729 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		AE7474722AB8AB1500845729 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
@@ -191,6 +199,14 @@
 			path = testUITests;
 			sourceTree = "<group>";
 		};
+		AE30CCF02ADD6FEB007986EE /* AdsList */ = {
+			isa = PBXGroup;
+			children = (
+				AE30CCF12ADD701A007986EE /* AdsListView.swift */,
+			);
+			path = AdsList;
+			sourceTree = "<group>";
+		};
 		AE4443402AD2EA580073C6A1 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -214,6 +230,8 @@
 				AED3E6082ABF24FE00E9AA3E /* DetailSheetView.swift */,
 				AE33A02F2AD2EE0A0063C924 /* ImagePicker.swift */,
 				AE3D8AF62AD43A48008A6FB2 /* ImageCarouselView.swift */,
+				AE5CC4392AD5A773005158DB /* FullscreenImageView.swift */,
+				AE30CCF32ADD760B007986EE /* EstimatedTimeView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -221,6 +239,7 @@
 		AE74746C2AB8787700845729 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				AE30CCF02ADD6FEB007986EE /* AdsList */,
 				AECA4F342AC86641005E9E4A /* AdDetails */,
 				AED3E60C2AC06C2D00E9AA3E /* MyAds */,
 				AED3E6042ABE01A800E9AA3E /* Home */,
@@ -287,6 +306,7 @@
 			children = (
 				AEBEBEC42ABAD031005EAC71 /* MapView.swift */,
 				AE23CD602ACEF81D0012F50C /* SelectLocationView.swift */,
+				AE5CC43B2AD5CA7A005158DB /* DetailMapView.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -470,10 +490,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE30CCF42ADD760B007986EE /* EstimatedTimeView.swift in Sources */,
 				AE93B55A2ACD829D00684710 /* SingleAdvertViewModel.swift in Sources */,
 				AED3E6062ABE01BA00E9AA3E /* HomeView.swift in Sources */,
 				AECA4F3A2AC86711005E9E4A /* CreateAdView.swift in Sources */,
 				AE23CD612ACEF81D0012F50C /* SelectLocationView.swift in Sources */,
+				AE5CC43C2AD5CA7A005158DB /* DetailMapView.swift in Sources */,
 				AE1B16EF2AA5FB50006563F1 /* ContentView.swift in Sources */,
 				AE7474732AB8AB1500845729 /* RegisterView.swift in Sources */,
 				AE3D8AF72AD43A48008A6FB2 /* ImageCarouselView.swift in Sources */,
@@ -488,8 +510,10 @@
 				AED3E60E2AC06DBC00E9AA3E /* Advert.swift in Sources */,
 				AE1B16ED2AA5FB50006563F1 /* testApp.swift in Sources */,
 				AECA4F382AC86666005E9E4A /* AdDetailsView.swift in Sources */,
+				AE30CCF22ADD701A007986EE /* AdsListView.swift in Sources */,
 				AED3E6092ABF24FE00E9AA3E /* DetailSheetView.swift in Sources */,
 				AE7474692AB84A8C00845729 /* LoginView.swift in Sources */,
+				AE5CC43A2AD5A773005158DB /* FullscreenImageView.swift in Sources */,
 				AEE017152ABCD34C003A9924 /* BottomNavTabComponent.swift in Sources */,
 				AEBEBEC52ABAD031005EAC71 /* MapView.swift in Sources */,
 				AE33A0322AD306790063C924 /* ImageUploadViewModel.swift in Sources */,

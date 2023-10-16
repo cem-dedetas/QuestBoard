@@ -12,7 +12,6 @@ struct MyAdsView: View {
     @State var isActive : Bool = false
     var body: some View {
         NavigationStack{
-            if !isActive {
                 VStack{
                     if advertvm.isLoading {
                         ProgressView("Loading...")
@@ -40,8 +39,6 @@ struct MyAdsView: View {
                             
                         }
                     }
-                }.navigationDestination(isPresented: $isActive){
-                    CreateAdView(stackIsActive: $isActive)
                 }
                 .navigationTitle("My Ads")
                     .toolbar{
@@ -52,10 +49,10 @@ struct MyAdsView: View {
                                 Text("Create")
                             }
                         }
-                }
-            } else {
-                /*@START_MENU_TOKEN@*/EmptyView()/*@END_MENU_TOKEN@*/
-            }
+                    }
+                    .navigationDestination(isPresented: $isActive){
+                        CreateAdView(stackIsActive: $isActive)
+                    }
         }.onAppear {
             // Fetch data when the view appears
             advertvm.fetchData()
