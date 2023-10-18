@@ -14,17 +14,15 @@ struct EstimatedTimeView: View {
     @State var eta:String = ""
     var body: some View {
         if eta.isEmpty {
-            Text("Calculating").onAppear{
-                Task {
-                    eta = await getEstimatedTime(to: from, from: mapViewModel.userMapRegion.center)
-                }
+            Text("Calculating")
+                .onAppear{
+                    Task {
+                        eta = await getEstimatedTime(to: from, from: mapViewModel.userMapRegion.center)
+                    }
             }
         }
         else{
-            HStack{
-                Text(eta)
-                Image(systemName: "figure.walk")
-            }
+            Text(eta)
         }
     }
 }

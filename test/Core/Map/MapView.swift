@@ -26,6 +26,21 @@ struct MapView: View {
         NavigationStack {
             Map(position: $mapCameraPosition, scope:mapScope){
                     UserAnnotation()
+                    
+                    if let route, routeDisplaying, let selectedMarker {
+                        Annotation("\(selectedMarker.title.prefix(15))\(selectedMarker.title.count > 15 ?  "..." : "" )",coordinate:selectedMarker.location2d){
+                            Button {
+                                sheetIsPresented = true
+                            }label:{
+                                VStack{
+                                    Image(systemName: "house.circle.fill").resizable().scaledToFit().frame(width: 40, height: 40)
+                                }.tint(.red)
+                            }
+                        }
+                        MapPolyline(route.polyline)
+                            .stroke(.blue, lineWidth: 6)
+                    }
+                else {
                     ForEach(advertsViewModel.listings, id:\._id){ listing in
                         Annotation("\(listing.title.prefix(15)) \(listing.title.count > 15 ?  "..." : "" )",coordinate:listing.location2d){
                             Button {
@@ -38,32 +53,18 @@ struct MapView: View {
                             }
                         }
                     }
-                    if let route, routeDisplaying {
-                        MapPolyline(route.polyline)
-                            .stroke(.blue, lineWidth: 6)
-                    }
+                }
                 
             }
                 .onMapCameraChange { proxy in
-    //                let x1 = "\(proxy.region.center.latitude + proxy.region.span.latitudeDelta)"
-    //                let x2 = "\(proxy.region.center.latitude - proxy.region.span.latitudeDelta)"
-    //                
-    //                let y1 = "\(proxy.region.center.longitude - proxy.region.span.longitudeDelta)"
-    //                let y2 = "\(proxy.region.center.longitude + proxy.region.span.longitudeDelta)"
-    //                
-    //                print(x1,y1)
-    //                print(x2,y2)
-    //                print("__")
                     advertsViewModel.fetchDataWithLocation(lat: proxy.region.center.latitude , lon: proxy.region.center.longitude, radius: max(proxy.region.span.longitudeDelta, proxy.region.span.latitudeDelta))
                 }
-    //            .ignoresSafeArea(.all)
                 .mapControlVisibility(.hidden)
                     .overlay(alignment:.bottomTrailing){
                         VStack{
                             MapUserLocationButton(scope: mapScope)
                             MapCompass(scope: mapScope)
                                 .mapControlVisibility(.visible)
-                            //                    MapPitchButton()
                         }
                         .padding(.trailing)
                         .padding(.bottom,100)
@@ -81,20 +82,29 @@ struct MapView: View {
                                     .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
                                 
                             }.padding()
-                            if routeDisplaying, route != nil {
+                        }
+                    }
+                    .overlay(alignment:.top){
+                        if routeDisplaying, route != nil, let selectedMarker{
+                            
+                            VStack {
                                 HStack {
+                                    Text("Route to")
+                                    let titleString = "\(selectedMarker.title.prefix(15))\(selectedMarker.title.count > 15 ?  "..." : "" )"
+                                    Text(titleString).bold()
+                                }
+                                HStack{
+                                    EstimatedTimeView(from:selectedMarker.location2d)
+                                    Image(systemName: "figure.walk")
+                                    
                                     Button{
                                         routeDisplaying = false
                                     }label:{
-                                        Image(systemName: "xmark").resizable().padding(10).frame(width: 40,height: 40).tint(.red)
-                                    }.background(Color(.secondarySystemBackground)).buttonBorderShape(.roundedRectangle).cornerRadius(5)
-                                        .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
-                                    
-                                    if let eta = eta {
-                                        Text( formatTimeInterval(eta) )
+                                        Text("Cancel").tint(.red)
                                     }
+                                    
                                 }
-                            }
+                            }.padding().background(.regularMaterial).clipShape(Capsule()).shadow(radius: 3)
                         }
                     }
                     .mapScope(mapScope)

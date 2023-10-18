@@ -46,7 +46,7 @@ struct AdDetailsView: View {
                                     VStack{
                                         GeometryReader{proxy in
                                             let size = proxy.size
-                                            ImageLoader(from: photoUrl, width:size.width)
+                                            CachedImageView(url: photoUrl, width:size.width)
                                         }
                                     }
                                     

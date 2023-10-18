@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct DetailSheetView: View {
     @Binding var advert:Advert?
     @Binding var isAdDetailPresented:Bool
     @Binding var routeDisplaying:Bool
     @State var sheetRatio = 0.60
+    @State var linelimit:Int = 8
+    @EnvironmentObject var mapViewModel:MapViewModel
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -40,7 +43,7 @@ struct DetailSheetView: View {
                         }
                     }.padding()
                     Section{
-                        HStack {
+                        HStack(alignment:.firstTextBaseline) {
                             VStack(alignment: .leading) {
                                 Text(advert.title).font(.title)
                             
@@ -49,28 +52,65 @@ struct DetailSheetView: View {
                             Spacer()
                             if let address = advert.address {
                                 VStack(alignment: .trailing) {
-                                    Text(address.country)
-                                    
-                                    Text("\(address.city) / \(address.town)").foregroundStyle(.gray)
+                                    Text(address.city)
+                                    Text(address.town).foregroundStyle(.gray)
                                 }.padding(.horizontal)
                             }
                         }
                     }
                     Section{
-                        Text(advert.description).lineLimit(3).italic().padding()
+                        
+                    }
+                    Section{
+                        ScrollView(.vertical){
+                            VStack{
+                                Text(advert.description).lineLimit(linelimit).italic().padding()
+                                Button{
+                                    withAnimation(.easeInOut){
+                                        linelimit = linelimit == 8 ? .max : 8
+                                    }
+                                } label :{
+                                    linelimit == 8 ? Text("See more") : Text("See less")
+                                }.padding(.vertical, 10)
+                            }
+                        }.padding(.bottom)
                     }
                     Section {
-                        Button{
-                            routeDisplaying = true
-                        } label: {
-                            Text("Get Directions").padding().background(.regularMaterial).clipShape(.capsule)
+                        VStack(alignment:.center){
+                            HStack(alignment: .center){
+                                Spacer()
+                                Button{
+                                    routeDisplaying = true
+                                } label: {
+                                    HStack{
+                                        Text("Show Route (")
+                                        EstimatedTimeView(from: advert.location2d)
+                                        Image(systemName: "figure.walk")
+                                        Text(")")
+                                    }.padding().background(Color.accentColor).clipShape(.capsule)
+                                        .foregroundStyle(Color.white)
+                                }
+                                Spacer()
+                            }
+                            Button {
+                                let coordinates = advert.location2d
+                                let placemark = MKPlacemark(coordinate: coordinates)
+                                let mapItem = MKMapItem(placemark: placemark)
+                                mapItem.name = advert.title
+
+                                        // Set the options for opening Apple Maps
+                                let options = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
+
+                                        // Open Apple Maps with the marker centered
+                                mapItem.openInMaps(launchOptions: options)
+                            } label :{
+                                Text("or open with Apple Maps")
+                            }
                         }
                     }
                     Spacer()
                 }.navigationTitle(advert.title).navigationBarTitleDisplayMode(.inline)
-                .presentationDetents([.fraction(sheetRatio)])
-                
-                
+                .presentationDetents([.medium,.large])
             }
             
         }

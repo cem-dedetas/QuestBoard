@@ -51,13 +51,13 @@ func formatTimeInterval(_ seconds: TimeInterval) -> String {
     
     if hours > 0 {
         if minutes > 0 {
-            return "\(hours) hr \(minutes) min"
+            return "\(hours) h \(minutes) m"
         } else {
-            return "\(hours) hr"
+            return "\(hours) h"
         }
     } else if minutes > 0 {
-        return "\(minutes) min"
+        return "\(minutes) m"
     } else {
-        return "\(secondsRemainder) sec"
+        return "\(secondsRemainder) s"
     }
 }

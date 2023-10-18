@@ -26,7 +26,7 @@ struct FullscreenImageView: View {
             Color.black.ignoresSafeArea()
             TabView(){
                 ForEach(urls, id: \.self) { url in
-                    ImageLoader(from: url, width: UIScreen.main.bounds.width)
+                    CachedImageView(url: url, width: UIScreen.main.bounds.width)
                         .scaleEffect(scale * currentScale)
                                 .offset(CGSize(width: imageOffset.width + dragOffset.width, height: imageOffset.height + dragOffset.height))
                                 .gesture(

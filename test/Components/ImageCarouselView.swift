@@ -81,30 +81,3 @@ struct ImageCarouselView<Content: View, T:Hashable>: View {
     }
 }
 
-
-func ImageLoader(from url:String, width:CGFloat) -> some View {
-    return AsyncImage(url: URL(string:url)){ phase in
-        if let image = phase.image {
-            image
-                .resizable()
-                .scaledToFit()
-                .frame(width:width)
-                .background(.gray)
-            
-        }
-        else if phase.error != nil {
-            Text("Could not load image")
-                .padding()
-                .background(.gray)
-                .frame(width:width, height:300)
-                
-        }
-        else {
-            ProgressView().frame(width:width, height:300)
-        }
-    }.background(.gray)
-        
-    
-
-}
-

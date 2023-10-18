@@ -22,9 +22,13 @@ struct AdsListView: View {
                             
                                 ForEach(advertsViewModel.listings, id:\._id){ listing in
                                     VStack {
-                                        ImageLoader(from: listing.imgURLs[0], width: proxy.size.width).background(.regularMaterial)
+                                        CachedImageView(url: listing.imgURLs[0], width: proxy.size.width).background(.regularMaterial)
                                             .overlay(alignment:.bottomTrailing){
-                                                EstimatedTimeView(from: listing.location2d).padding().background(.regularMaterial).padding(.bottom)
+                                                HStack{
+                                                    EstimatedTimeView(from: listing.location2d)
+                                                    Image(systemName: "figure.walk")
+                                                }
+                                                    .padding().background(.regularMaterial).padding(.bottom)
                                             }
                                         HStack{
                                             VStack(alignment:.leading){
