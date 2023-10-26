@@ -8,14 +8,23 @@
 import Foundation
 
 
-struct User:Identifiable,Codable {
-    let id: String
+struct RegisterRequest:Codable {
     let fullName:String
+    let password:String
     let email:String
-    
-    
 }
 
-extension User {
-    static var MOCKUSER = User(id: UUID().uuidString, fullName: "Cem Dedetas", email: "cemdedetas@gmail.com")
+struct LoginRequest:Codable {
+    let password:String
+    let email:String
 }
+
+
+struct User: Codable {
+    let name: String
+    let email: String
+    let salt: String
+    let profilePicUrl: String
+}
+
+

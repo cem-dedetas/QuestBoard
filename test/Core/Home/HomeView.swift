@@ -15,7 +15,7 @@ struct HomeView: View {
             MapView().tag(1)
             AdsListView().tag(2)
             MyAdsView().tag(3)
-            Text("Tab Content 4").tag(4)
+            ProfileView().tag(4)
         }
         .overlay(alignment:.bottom){
             BottomNavTabComponent(tabSelection: $tabSelection ,tabBarItems:[("map","Map"),

@@ -23,7 +23,7 @@ struct SelectLocationView: View {
         }
         .onMapCameraChange { context in
             temp = context.region.center
-            print("\(context.region.center.latitude), \(context.region.center.longitude)")
+//            print("\(context.region.center.latitude), \(context.region.center.longitude)")
             convertCoordinatesToAddress(latitude: temp.latitude, longitude: temp.longitude){ placemark in
                 if let placemark = placemark {
                         tempPlacemark = placemark
@@ -48,9 +48,11 @@ struct SelectLocationView: View {
                         Text("\(_address.name ?? "") \(_address.thoroughfare ?? ""), \(_address.locality ?? "") \(_address.administrativeArea ?? "") \(_address.postalCode ?? "") \(_address.country ?? "")")
                             .padding()
                             
-                    }.background(Color.white)
-                        .clipShape(.capsule)
-                        .shadow(radius:  10)
+                    }
+                    .frame(width: UIScreen.main.bounds.width - 36)
+                    .background(.regularMaterial)
+                    .clipShape(.capsule)
+                    .shadow(radius:  10)
                     
                 }
                 Button {
@@ -66,8 +68,8 @@ struct SelectLocationView: View {
                         
                     
                 }.frame(width: UIScreen.main.bounds.width - 36, height: 40)
-                    .background(Color.blue)
-                    .cornerRadius(5)
+                    .background(Color.accentColor)
+                    .clipShape(Capsule())
                     .padding(.bottom,50)
             }
         }.mapScope(selectLocationMapScope)

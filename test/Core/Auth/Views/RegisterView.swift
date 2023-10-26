@@ -30,14 +30,15 @@ struct RegisterView: View {
         ZStack{
             Color(red: 0.6, green: 0.90, blue: 0.6).edgesIgnoringSafeArea(.all)
             Circle()
-                .scale(1.85*scaleFactor)
-                .fill(Color(red: 0.65, green: 0.95, blue: 0.65))
+                .scale(1.50*1.5*scaleFactor)
+                .fill(.thinMaterial)
             Circle()
-                .scale(1.55*scaleFactor)
-                .fill(Color(red: 0.7, green: 0.95, blue: 0.7))
+                .scale(1.50*1.25*scaleFactor)
+                .fill(.regularMaterial)
             Circle()
-                .scale(1.35*scaleFactor)
-                .fill(.white)
+                .scale(1.50*scaleFactor)
+                .fill(.thickMaterial)
+                .shadow(color:.gray.opacity(0.2) ,radius: 5)
             
                 VStack(spacing:24){
                     Spacer()
@@ -60,7 +61,7 @@ struct RegisterView: View {
     
                     Button {
                         Task{
-                            try await authViewModel.register(withEmail:email, password:password, fullname:fullName)
+                            try await authViewModel.register(email:email, password:password, fullname:fullName)
                         }
                     }label : {
                         HStack{

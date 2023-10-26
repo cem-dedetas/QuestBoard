@@ -71,7 +71,9 @@ struct AdDetailsView: View {
                             }
                             Divider()
                             Section{
-                                Text(advertvm.advert.description).italic().padding()
+                                Text(advertvm.advert.description)
+                                    .foregroundStyle(.primary.opacity(0.7))
+                                    .padding()
                             }
                             Divider()
                             ZStack {
@@ -81,7 +83,7 @@ struct AdDetailsView: View {
                                     Marker(advertvm.advert.title, systemImage: "chevron.down", coordinate: advertvm.advert.location2d)
                                 }
                             .frame(height: 300)
-                                LinearGradient(gradient: Gradient(colors: [Color.black.opacity(0.3), Color.clear]), startPoint: .top, endPoint: .bottom)
+                                LinearGradient(gradient: Gradient(colors: [Color.black.opacity(0.5), Color.clear]), startPoint: .top, endPoint: .bottom)
                                                 .frame(height: 300)
                                 VStack {
                                     NavigationLink{

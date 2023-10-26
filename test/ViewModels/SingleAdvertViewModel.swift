@@ -34,8 +34,10 @@ class SingleAdvertViewModel: ObservableObject {
             isLoading = false
             return
         }
+        var request = URLRequest(url: url)
+        request = AuthMiddleware.shared.addToken(to: request)
         
-        let task = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
+        let task = URLSession.shared.dataTask(with: request) { [weak self] (data, response, error) in
             DispatchQueue.main.async {
                 // Hide loading indicator
                 self?.isLoading = false
@@ -82,11 +84,12 @@ class SingleAdvertViewModel: ObservableObject {
             isLoading = false
             return
         }
-
         var request = URLRequest(url: url)
+        
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
+        request = AuthMiddleware.shared.addToken(to: request)
+        
         do {
             let encoder = JSONEncoder()
             let jsonData = try encoder.encode(advertRequest)

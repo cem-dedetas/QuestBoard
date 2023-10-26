@@ -10,7 +10,7 @@ struct CachedImageView: View {
                 AsyncImage(
                     url: imageURL,
                     placeholder: {
-                        ProgressView().frame(width: width, height: 300)
+                        ProgressView().frame(width: width, height: width)
                     },
                     image: { image in
                         Image(uiImage: image)

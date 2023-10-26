@@ -17,15 +17,15 @@ struct InputView: View {
     var body: some View {
         VStack(alignment: .leading,spacing: 12){
             Text(title)
-                .foregroundColor(Color(.darkGray))
+                .foregroundColor(Color.primary)
                 .fontWeight(.semibold)
             if isSecureField {
                 SecureField(placeholder, text: $text)
-                    .font(.system(size:14)).autocorrectionDisabled()
+                    .font(.system(size:16)).autocorrectionDisabled()
             }
             else{
                 TextField(placeholder, text: $text)
-                    .font(.system(size:14)).autocorrectionDisabled()
+                    .font(.system(size:16)).autocorrectionDisabled()
                 
             }
         }

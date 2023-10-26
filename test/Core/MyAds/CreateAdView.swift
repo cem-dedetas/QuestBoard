@@ -30,7 +30,7 @@ struct CreateAdView: View {
     @State var description:String = ""
     @State var phone:String = ""
     @State var email:String = ""
-    @State var adType:AdvertTypeEnum = .realEstate
+    @State var adType:AdvertTypeEnum = .other
     @State var coord = CLLocationCoordinate2D(latitude: 41.03322, longitude: 29.00000)
     @State var isLocationSet:Bool = false
     @State var placemark:CLPlacemark? = nil
@@ -53,11 +53,12 @@ struct CreateAdView: View {
                     TextField("Title", text: $title, axis: .vertical).lineLimit(1...2)
                     TextField("Description", text: $description, axis: .vertical).lineLimit(3...10)
 
-                    Picker("Type", selection: $adType) {
-                        ForEach(AdvertTypeEnum.allCases, id:\.rawValue){type in
-                            Text(enumStrings[type.rawValue])
-                        }
-                    }
+                    Picker("Select Advert Type", selection: $adType) {
+                                ForEach(AdvertTypeEnum.allCases, id: \.self) { type in
+                                    Text(enumStrings[type.rawValue]).tag(type)
+                                }
+                            }
+//                    .pickerStyle(PalettePickerStyle())
                 }
                 
                 Section(header: Text("Contact Info")) {

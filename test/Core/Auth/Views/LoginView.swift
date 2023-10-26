@@ -12,7 +12,7 @@ protocol LoginFormProtocol {
 }
 
 struct LoginView: View {
-    @State var scaleFactor:CGFloat = 0
+    @State var scaleFactor:CGFloat = 1
     @State var email:String="";
     @State var password:String="";
     @EnvironmentObject var authViewModel:AuthViewModel
@@ -24,18 +24,19 @@ struct LoginView: View {
             ZStack{
                 Color(red: 0.6, green: 0.90, blue: 0.6).edgesIgnoringSafeArea(.all)
                 Circle()
-                    .scale(1.85*scaleFactor)
-                    .fill(Color(red: 0.65, green: 0.95, blue: 0.65))
-                    .animation(.easeInOut.delay(2), value: scaleFactor)
+                    .scale(1.50*1.5*scaleFactor)
+                    .fill(.thinMaterial)
                 Circle()
-                    .scale(1.55*scaleFactor)
-                    .fill(Color(red: 0.7, green: 0.95, blue: 0.7))
-                    .animation(.easeInOut.delay(2), value: scaleFactor)
+                    .scale(1.50*1.25*scaleFactor)
+                    .fill(.regularMaterial)
                 Circle()
-                    .scale(1.35*scaleFactor)
-                    .fill(.white)
-                    .animation(.easeInOut.delay(2), value: scaleFactor)
-                
+                    .scale(1.50*scaleFactor)
+                    .fill(.thickMaterial)
+                    .shadow(color:.gray.opacity(0.2) ,radius: 5)
+                    
+                if authViewModel.isLoading {
+                    ProgressView()
+                } else {
                     VStack(spacing:24){
                         Spacer()
                         InputView(text:$email, title: "E-mail", placeholder: "example@email.com").textInputAutocapitalization(.never).textContentType(.emailAddress).keyboardType(.emailAddress)
@@ -50,18 +51,21 @@ struct LoginView: View {
                         }
                         Button {
                             Task{
-                                try await authViewModel.signIn(withEmail:email,password:password)
+                                try await authViewModel.signIn(email:email,password:password)
                             }
                         }label : {
                             HStack{
                                 Text("Sign In").fontWeight(.semibold)
                                 Image(systemName: "arrow.right.square.fill")
                             }.foregroundColor(.white)
-                                
+                            
                             
                         }.frame(width: UIScreen.main.bounds.width - 36, height: 40)
-                            .background(Color(red: 0.55, green: 0.90, blue: 0.55)
-                                .grayscale(isSubmitDisabled ? 1.0 :0.0))
+                            .background( !isSubmitDisabled ?
+                                         Color(red: 0.55, green: 0.90, blue: 0.55)
+                                        :
+                                            Color.secondary
+                            )
                             .cornerRadius(5)
                             .disabled(isSubmitDisabled)
                         Spacer()
@@ -69,31 +73,27 @@ struct LoginView: View {
                             RegisterView().navigationBarBackButtonHidden()
                         }label : {
                             HStack{
-                                Text("Dont have an acount?").fontWeight(.semibold).foregroundColor(.white)
+                                Text("Dont have an acount?").fontWeight(.semibold)
                                 Text("Sign Up").fontWeight(.bold)
                             }
                         }
                     }
-                        .autocapitalization(.none)
-                        .padding(.horizontal)
-                        
-            }
-            .onAppear{
-                withAnimation {
-                    scaleFactor = 1.0
+                    .autocapitalization(.none)
+                    .padding(.horizontal)
                 }
             }
+            
         }
     }
 }
 
 extension LoginView: LoginFormProtocol {
     var isSubmitDisabled:Bool {
-        return !email.isEmpty
+        return !(!email.isEmpty
         && email.contains("@")
         && !password.isEmpty
         && password.count > 7
-    }
+)    }
     
     
 }

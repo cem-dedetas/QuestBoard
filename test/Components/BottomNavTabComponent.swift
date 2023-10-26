@@ -17,8 +17,8 @@ struct BottomNavTabComponent: View {
         ZStack{
             RoundedRectangle(cornerRadius:36)
                 .frame(width: UIScreen.main.bounds.width - 24, height: 80)
-                .foregroundColor(Color(.secondarySystemBackground))
-                .shadow(radius: 6, y:3)
+                .foregroundStyle(.thickMaterial)
+                .shadow(radius: 9)
             HStack(spacing:1){
                 ForEach(0..<4){ index in
                     Button{

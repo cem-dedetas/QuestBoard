@@ -10,6 +10,7 @@ import SwiftUI
 struct AdsListView: View {
     @StateObject var advertsViewModel = MultiAdvertViewModel()
     @EnvironmentObject var mapViewModel:MapViewModel
+    
     var body: some View {
         NavigationStack{
             VStack{
@@ -21,47 +22,57 @@ struct AdsListView: View {
                         ScrollView(.vertical){
                             
                                 ForEach(advertsViewModel.listings, id:\._id){ listing in
-                                    VStack {
-                                        CachedImageView(url: listing.imgURLs[0], width: proxy.size.width).background(.regularMaterial)
-                                            .overlay(alignment:.bottomTrailing){
-                                                HStack{
-                                                    EstimatedTimeView(from: listing.location2d)
-                                                    Image(systemName: "figure.walk")
+                                    NavigationLink{
+                                        AdDetailsView(adId: listing._id)
+                                    } label :{
+                                        VStack {
+                                            CachedImageView(url: listing.imgURLs[0], width: proxy.size.width).background(.regularMaterial)
+                                                .overlay(alignment:.bottomTrailing){
+                                                    HStack{
+                                                        EstimatedTimeView(from: listing.location2d)
+                                                        Image(systemName: "figure.walk")
+                                                    }
+                                                        .padding().background(.regularMaterial)
+                                                        .clipShape(
+                                                            .rect(
+                                                                topLeadingRadius: 10,
+                                                                bottomLeadingRadius: 10,
+                                                                bottomTrailingRadius: 0,
+                                                                topTrailingRadius: 0
+                                                            )
+                                                        )
+                                                        .padding(.bottom)
                                                 }
-                                                    .padding().background(.regularMaterial).padding(.bottom)
-                                            }
-                                        HStack{
-                                            VStack(alignment:.leading){
-                                                Text(listing.title).font(.title2)
-                                                if let address = listing.address{
-                                                    Text("\(address.city) - \(address.town)").font(.footnote)
+                                            HStack{
+                                                VStack(alignment:.leading){
+                                                    Text(listing.title).font(.title2)
+                                                    if let address = listing.address{
+                                                        Text("\(address.city) - \(address.town)").font(.footnote)
+                                                    }
                                                 }
-                                            }
-                                            Spacer()
-                                            NavigationLink{
-                                                AdDetailsView(adId: listing._id)
-                                            } label :{
-                                                HStack {
-                                                    Text("Details")
-                                                    Image(systemName: "chevron.right")
-                                                }.padding().background(Color.accentColor).foregroundStyle(Color.white).clipShape(Capsule())
-                                            }
+                                                Spacer()
+                                            }.padding()
                                             
-                                        }.padding()
-                                        
-                                            .frame(width:proxy.size.width)
-                                        .background(.regularMaterial)
-                                        .padding(.bottom)
-                                        Divider()
+                                        }
+                                        .tint(Color.primary)
+                                        .frame(width:proxy.size.width - 20)
+                                        .background(.thickMaterial)
+                                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                                        .padding(10)
                                     }
                                 }
+                            }
+                            .scrollIndicators(.never)
+                            .refreshable{
+                                advertsViewModel.fetchDataWithLocation(lat: mapViewModel.userMapRegion.center.latitude, lon: mapViewModel.userMapRegion.center.longitude, radius: 1)
                             }
                         }
                     }
                 }
             }.onAppear{
                 advertsViewModel.fetchDataWithLocation(lat: mapViewModel.userMapRegion.center.latitude, lon: mapViewModel.userMapRegion.center.longitude, radius: 1)
-            }.navigationTitle("Ads Near Me")
+            }.navigationTitle("Ads Near Me").navigationBarTitleDisplayMode(.inline)
+            
         }
     }
 }

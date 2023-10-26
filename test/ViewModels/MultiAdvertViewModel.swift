@@ -26,8 +26,10 @@ class MultiAdvertViewModel: ObservableObject {
             isLoading = false
             return
         }
+        var request = URLRequest(url: url)
+        request = AuthMiddleware.shared.addToken(to: request)
         
-        let task = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
+        let task = URLSession.shared.dataTask(with: request) { [weak self] (data, response, error) in
             DispatchQueue.main.async {
                 // Hide loading indicator
                 self?.isLoading = false
@@ -78,8 +80,10 @@ class MultiAdvertViewModel: ObservableObject {
                 isLoading = false
                 return
             }
-            
-            let task = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
+        var request = URLRequest(url: url)
+        request = AuthMiddleware.shared.addToken(to: request)
+        
+        let task = URLSession.shared.dataTask(with: request) { [weak self] (data, response, error) in
                 DispatchQueue.main.async {
                     // Hide loading indicator
                     self?.isLoading = false

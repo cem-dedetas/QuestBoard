@@ -12,13 +12,13 @@ struct ContentView: View {
     @State var tabSelection = 1
     var body: some View {
         Group{
-//            if(authViewModel.userSession != nil) {
-//                MapView()
-//            }
-//            else {
-//                LoginView()
-//            }
-            HomeView(tabSelection: $tabSelection)
+            if(authViewModel.userToken != nil) {
+                HomeView(tabSelection: $tabSelection)
+            }
+            else {
+                LoginView()
+            }
+            
             
         }
     }
