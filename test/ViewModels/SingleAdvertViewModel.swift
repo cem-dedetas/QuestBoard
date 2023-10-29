@@ -131,6 +131,110 @@ class SingleAdvertViewModel: ObservableObject {
         task.resume()
     }
 
+    
+    func addToFavorites(id:String) {
+        // Show loading indicator
+        isLoading = true
+        
+        
+        guard let url = URL(string: "http://localhost:3000/api/v1/user/favorite/\(id)") else {
+            errorMessage = "Invalid URL"
+            isLoading = false
+            return
+        }
+        var request = URLRequest(url: url)
+        request = AuthMiddleware.shared.addToken(to: request)
+        request.httpMethod = "PATCH"
+        
+        let task = URLSession.shared.dataTask(with: request) { [weak self] (data, response, error) in
+            DispatchQueue.main.async {
+                // Hide loading indicator
+                self?.isLoading = false
+                
+                if let error = error {
+                    self?.errorMessage = error.localizedDescription
+                    return
+                }
+                
+                guard let data = data else {
+                    self?.errorMessage = "No data received"
+                    return
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    let dateFormatter: DateFormatter = {
+                            let formatter = DateFormatter()
+                            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+                            return formatter
+                        }()
+                    decoder.dateDecodingStrategy = .formatted(dateFormatter)
+                    let decodedResponse = try decoder.decode(UserResponse.self, from: data)
+                    self?.errorMessage = ""
+                } catch {
+                    self?.errorMessage = "Failed to decode response"
+                    let localdata = try? JSONSerialization.jsonObject(with: data)
+                    if !(localdata == nil) {
+                        print("Error: \(localdata!)")
+                    }
+                }
+            }
+        }
+        
+        task.resume()
+    }
+    
+    func removeFromFavorites(id:String) {
+        // Show loading indicator
+        isLoading = true
+        
+        
+        guard let url = URL(string: "http://localhost:3000/api/v1/user/unfavorite/\(id)") else {
+            errorMessage = "Invalid URL"
+            isLoading = false
+            return
+        }
+        var request = URLRequest(url: url)
+        request = AuthMiddleware.shared.addToken(to: request)
+        request.httpMethod = "PATCH"
+        
+        let task = URLSession.shared.dataTask(with: request) { [weak self] (data, response, error) in
+            DispatchQueue.main.async {
+                // Hide loading indicator
+                self?.isLoading = false
+                
+                if let error = error {
+                    self?.errorMessage = error.localizedDescription
+                    return
+                }
+                
+                guard let data = data else {
+                    self?.errorMessage = "No data received"
+                    return
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    let dateFormatter: DateFormatter = {
+                            let formatter = DateFormatter()
+                            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+                            return formatter
+                        }()
+                    decoder.dateDecodingStrategy = .formatted(dateFormatter)
+                    let decodedResponse = try decoder.decode(UserResponse.self, from: data)
+                    self?.errorMessage = ""
+                } catch {
+                    self?.errorMessage = "Failed to decode response"
+                    let localdata = try? JSONSerialization.jsonObject(with: data)
+                    if !(localdata == nil) {
+                        print("Error: \(localdata!)")
+                    }
+                }
+            }
+        }
+        
+        task.resume()
+    }
 }
 
 

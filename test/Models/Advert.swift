@@ -37,7 +37,7 @@ struct Advert: Codable, Hashable{
     let location: Location
     let address: Address?
     let patron : User
-
+    let likeCount:Int
     // Provide an initializer for the Advert struct
     init(id: String, title: String, adType: AdvertTypeEnum, description: String, price: Int, email: String, imgURLs: [String], phone: String, createdAt: String, location: Location, address: Address? = nil) {
         self._id = id
@@ -51,7 +51,8 @@ struct Advert: Codable, Hashable{
         self.createdAt = createdAt
         self.location = location
         self.address = address
-        self.patron = User(name: "", email: "", profilePicUrl: "")
+        self.patron = User(name: "", email: "", profilePicUrl: "", favorites: [])
+        self.likeCount = 0
     }
 }
 

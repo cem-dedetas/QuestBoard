@@ -24,6 +24,7 @@ struct User: Codable, Hashable {
     let name: String
     let email: String
     let profilePicUrl: String
+    let favorites : [String]
 }
 
 struct AuthResponse: Codable {

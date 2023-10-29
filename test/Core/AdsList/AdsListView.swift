@@ -7,15 +7,17 @@
 
 import SwiftUI
 
+
 struct AdsListView: View {
     @StateObject var advertsViewModel = MultiAdvertViewModel()
     @EnvironmentObject var mapViewModel:MapViewModel
+    @EnvironmentObject var authViewModel:AuthViewModel
     
     var body: some View {
         NavigationStack{
             VStack{
-                if advertsViewModel.isLoading {
-                    ProgressView()
+                if (advertsViewModel.isLoading || authViewModel.isLoading) {
+                    ProgressView("Fetching Ads")
                 } else {
                     GeometryReader{ proxy in
                         VStack(alignment: .center) {
@@ -53,6 +55,11 @@ struct AdsListView: View {
                                                     }
                                                 }
                                                 Spacer()
+                                                if let user = authViewModel.currentUser {
+                                                    LikeButtonComponent(adId:listing._id ,isFavorited: user.favorites.contains(where: { element in
+                                                        element == listing._id
+                                                    }))
+                                                }
                                             }.padding()
                                             
                                         }
@@ -73,6 +80,7 @@ struct AdsListView: View {
                 }
             }.onAppear{
                 advertsViewModel.fetchDataWithLocation(lat: mapViewModel.userMapRegion.center.latitude, lon: mapViewModel.userMapRegion.center.longitude, radius: 1)
+                authViewModel.fetchUser()
             }.navigationTitle("Ads Near Me").navigationBarTitleDisplayMode(.inline)
             
         }
