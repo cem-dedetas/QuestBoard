@@ -17,14 +17,14 @@ struct UploadResponse: Decodable {
 
 struct CreateAdView: View {
     
+    @StateObject var advertViewModel = SingleAdvertViewModel()
+    @StateObject var imageViewModel = ImageUploadViewModel()
+    
     var advertIDPublisher: AnyPublisher<String, Never> {
-            NotificationCenter.default.publisher(for: Notification.Name("AdvertIDReceived"))
-                .compactMap { $0.object as? String }
-                .eraseToAnyPublisher()
-    }
-    
-    @StateObject var viewModel = SingleAdvertViewModel()
-    
+                NotificationCenter.default.publisher(for: Notification.Name("AdvertIDReceived"))
+                    .compactMap { $0.object as? String }
+                    .eraseToAnyPublisher()
+        }
     
     @State var title:String = ""
     @State var description:String = ""
@@ -34,36 +34,30 @@ struct CreateAdView: View {
     @State var coord = CLLocationCoordinate2D(latitude: 41.03322, longitude: 29.00000)
     @State var isLocationSet:Bool = false
     @State var placemark:CLPlacemark? = nil
-    @State var filesUploaded:Bool = false
+    @State var isUploadPhotosPresent:Bool = false
+    @State var images:[UIImage] = []
     
-    @State private var isImageUploadView = false
-    @State private var advertID: String = "" // Store the advert ID
     
     @Binding var stackIsActive:Bool
     
     var body: some View {
-        Form {
-            if viewModel.isLoading{
-                VStack{
-                    ProgressView("Creating...")
-                }
-            }
-            else{
+            Form {
                 Section(header: Text("Details")) {
                     TextField("Title", text: $title, axis: .vertical).lineLimit(1...2)
-                    TextField("Description", text: $description, axis: .vertical).lineLimit(3...10)
-
+                    TextField("Description", text: $description, axis: .vertical).lineLimit(1...4)
+                    
                     Picker("Select Advert Type", selection: $adType) {
-                                ForEach(AdvertTypeEnum.allCases, id: \.self) { type in
-                                    Text(enumStrings[type.rawValue]).tag(type)
-                                }
-                            }
-//                    .pickerStyle(PalettePickerStyle())
+                        ForEach(AdvertTypeEnum.allCases, id: \.self) { type in
+                            Text(enumStrings[type.rawValue]).tag(type)
+                        }
+                    }
+                    //                    .pickerStyle(PalettePickerStyle())
                 }
                 
                 Section(header: Text("Contact Info")) {
-                    iPhoneNumberField("Phone", text: $phone)
-                        .defaultRegion("+90")
+                    TextField("Phone",text: $phone)
+                        .keyboardType(.phonePad).autocorrectionDisabled()
+                        .textInputAutocapitalization(.never)
                     TextField("E-mail",text: $email)
                         .keyboardType(.emailAddress).autocorrectionDisabled()
                         .textInputAutocapitalization(.never)
@@ -73,30 +67,51 @@ struct CreateAdView: View {
                     NavigationLink{
                         SelectLocationView(coord:$coord, isSet: $isLocationSet, address: $placemark)
                     } label:{
-                        Text((isLocationSet) ? "Update Location" : "Select Location")
+                        Text((isLocationSet) ? "Edit Location" : "Select Location")
                     }
                     
                     if let placemark = placemark {
                         Text("\(placemark.name ?? "") \(placemark.thoroughfare ?? ""), \(placemark.locality ?? "") \(placemark.administrativeArea ?? "") \(placemark.postalCode ?? "") \(placemark.country ?? "")")
                     }
+                    NavigationLink{
+                        AddImagesView(selectedImages: $images)
+                    } label:{
+                        Text((images.isEmpty) ? "Select Images" : "Edit Images(\(images.count))")
+                    }
                     
+                }                
+                
+                
+            }
+            .overlay(){
+                if (advertViewModel.isLoading || imageViewModel.isLoading){
+                    ProgressView("Uploading")
+                        .progressViewStyle(CircularProgressViewStyle()
+                        ).frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center).background(
+                    .ultraThickMaterial.opacity(0.8)
+                )
+                            
                 }
             }
-            
-        }
-        .onReceive(advertIDPublisher) { id in
-            advertID = id
-            isImageUploadView = true
-        }
-        .navigationDestination(isPresented: $isImageUploadView){
-            AddImagesView(advertId:advertID, stackIsActive: $stackIsActive)
-        }
-        .navigationBarTitle("Create New Ad")
-        .navigationBarItems(trailing:
-            Button(action: {
+            .onChange(of: advertViewModel.advert){initial, changed in
+                if let advert = changed {
+                    imageViewModel.uploadedImages = images
+                    imageViewModel.uploadImages(adId: advert._id){result in
+                        switch(result){
+                            case .success(_):
+                            stackIsActive.toggle()
+                            case .failure(let error):
+                            print(error.localizedDescription)
+                        }
+                    }
+                }
+            }
+            .navigationBarTitle("Create New Ad")
+            .navigationBarItems(trailing:
+                                    Button(action: {
                 if let placemark = placemark{
                     Task{
-                        viewModel.uploadData(advertRequest: AdvertRequest(
+                        advertViewModel.uploadData(advertRequest: AdvertRequest(
                             title: title,
                             description: description,
                             adType: adType,
@@ -110,7 +125,21 @@ struct CreateAdView: View {
                                 city: placemark.administrativeArea ?? "N/A",
                                 town: placemark.subAdministrativeArea ?? "N/A",
                                 rest: "\(placemark.thoroughfare ?? ""),  \(placemark.subThoroughfare ?? "")")))
-                            
+//                        if let advert = advertViewModel.advert{
+//                            imageViewModel.uploadedImages = images
+//                            imageViewModel.uploadImages(adId: advert._id){result in
+//                                switch(result){
+//                                    case .success(_ ):
+//                                        stackIsActive = false
+//                                    case .failure(let error):
+//                                    print(error.localizedDescription)
+//                                }
+//                            
+//                            }
+//                        }
+//                        else {
+//                            print("No Advert or photos")
+//                        }
                     }
                 }
                 print("Submit button tapped")
@@ -121,7 +150,7 @@ struct CreateAdView: View {
                 }
                 
             }
-        )
+            )
     }
     
 }

@@ -9,17 +9,20 @@ import SwiftUI
 
 struct EditProfileView: View {
     @EnvironmentObject var authViewModel : AuthViewModel
+    @StateObject var imageViewModel = ImageUploadViewModel()
     @State var newEmail:String = ""
     @State var newUsername:String = ""
     @State var isFullscreen:Bool = false
     @State var isConfirmPresented:Bool = false
     @State var isAddPhotoPresented:Bool = false
+
+    
     
     var body: some View {
         
         VStack{
             Group{
-                if let imageUrl =  authViewModel.currentUser?.profilePicUrl {
+                if let imageUrl =  authViewModel.currentUser?.profilePicUrl, !imageUrl.isEmpty {
                     Button{
                         isFullscreen = true
                     } label :{
@@ -37,10 +40,11 @@ struct EditProfileView: View {
                 Button{
                     isConfirmPresented.toggle()
                 } label :{
-                    Image(systemName: "pencil")
+                    
+                    Image(systemName: authViewModel.userHasProfilePic ? "pencil" : "plus").scaleEffect(CGSize(width: 1.5, height: 1.5), anchor: .center)
                 }.foregroundStyle(.white)
                     .padding()
-                    .background(Color.accentColor)
+                    .background(Color.blue)
                     .clipShape(Circle())
 
                 
@@ -58,19 +62,42 @@ struct EditProfileView: View {
                 isAddPhotoPresented.toggle()
             })
             Button("Cancel", role: .cancel, action: {})
-            Button("Remove existing photo", role: .destructive, action: {})
+            if authViewModel.userHasProfilePic {
+                Button("Remove existing photo", role: .destructive, action: {
+                    imageViewModel.removeProfileImage{result in
+                        switch(result){
+                        case .success(let user ):
+                            authViewModel.currentUser = user
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                        }
+                        
+                    }
+                })
+            }
         })
         .sheet(isPresented: $isFullscreen){
             if let imageUrl =  authViewModel.currentUser?.profilePicUrl {
                 FullscreenImageView(urls: [imageUrl], selectedIndex: .constant(1))
             }
         }
+        
         .navigationDestination(isPresented: $isAddPhotoPresented){
-            AddProfilePhotoView()
+            AddProfilePhotoView(isAddPhotoPresented: $isAddPhotoPresented)
         }
         .onAppear{
             authViewModel.fetchUser()
         }
+    }
+}
+
+
+extension AuthViewModel {
+    var userHasProfilePic:Bool {
+        if let imageUrl =  self.currentUser?.profilePicUrl, !imageUrl.isEmpty {
+            return true
+        }
+        return false
     }
 }
 

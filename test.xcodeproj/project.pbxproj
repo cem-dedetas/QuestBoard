@@ -294,7 +294,6 @@
 		AE74746E2AB878BF00845729 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				AE7474832AB9C39800845729 /* ViewModel */,
 				AE7474822AB9C38F00845729 /* Views */,
 			);
 			path = Auth;
@@ -313,8 +312,8 @@
 		AE7474742AB9B51000845729 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				AE7474752AB9B53500845729 /* User.swift */,
 				AED3E60D2AC06DBC00E9AA3E /* Advert.swift */,
+				AE7474752AB9B53500845729 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -326,14 +325,6 @@
 				AE7474722AB8AB1500845729 /* RegisterView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		AE7474832AB9C39800845729 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				AE7474842AB9C3A600845729 /* AuthViewModel.swift */,
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		AEBEBEBF2ABACC89005EAC71 /* Map */ = {
@@ -349,6 +340,7 @@
 		AEBEBEC02ABACC8F005EAC71 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				AE7474842AB9C3A600845729 /* AuthViewModel.swift */,
 				AEBEBEC12ABACCA8005EAC71 /* MapViewModel.swift */,
 				AE8FB5212ACB243E002F607A /* MultiAdvertViewModel.swift */,
 				AE93B5592ACD829D00684710 /* SingleAdvertViewModel.swift */,

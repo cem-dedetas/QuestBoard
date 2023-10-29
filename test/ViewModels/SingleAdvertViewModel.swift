@@ -11,15 +11,10 @@ class SingleAdvertViewModel: ObservableObject {
     
     
     var adId:String?
-    @Published var advert: Advert = Advert(id: "", title: "", adType: AdvertTypeEnum.other, description: "", price: 0, email: "", imgURLs: [""], phone: "", createdAt: "", location: Location(lat: 0, lon: 0))
+    @Published var advert: Advert? = nil
     @Published var errorMessage: String = ""
     @Published var isLoading: Bool = false
     
-    init(adId: String?) {
-        if( !(adId == nil) ){
-            self.adId = adId
-        }
-    }
     init (){
         
     }
@@ -85,7 +80,6 @@ class SingleAdvertViewModel: ObservableObject {
             return
         }
         var request = URLRequest(url: url)
-        
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request = AuthMiddleware.shared.addToken(to: request)
@@ -117,11 +111,12 @@ class SingleAdvertViewModel: ObservableObject {
                 do {
                     let decoder = JSONDecoder()
                     let decodedResponse = try decoder.decode(SingleAdvertResponse.self, from: data)
-                    NotificationCenter.default.post(
-                                            name: Notification.Name("AdvertIDReceived"),
-                                            object: decodedResponse.data._id
-                                        )
                     self?.errorMessage = ""
+                    self?.advert = decodedResponse.data
+                    NotificationCenter.default.post(
+                                                                name: Notification.Name("AdvertIDReceived"),
+                                                                object: decodedResponse.data._id
+                                                            )
                     // Handle the response as needed
                 } catch {
                     self?.errorMessage = "Failed to decode response"

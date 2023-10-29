@@ -19,7 +19,7 @@ struct ProfileView: View {
                         }
                         label :{
                             HStack{
-                                if let imageUrl = authViewModel.currentUser?.profilePicUrl {
+                                if let imageUrl = authViewModel.currentUser?.profilePicUrl, !imageUrl.isEmpty {
                                     
                                     CachedImageView(url: imageUrl, width: 50).frame(height: 50).clipShape(Circle())
                                 }
@@ -58,11 +58,12 @@ struct ProfileView: View {
                         }
                     }
             }.navigationTitle("Profile")
+                .onAppear{
+                    authViewModel.fetchUser()
+                }
         }
         
-        .onAppear{
-            authViewModel.fetchUser()
-        }
+        
     }
 }
 

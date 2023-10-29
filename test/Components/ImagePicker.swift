@@ -10,12 +10,12 @@ import PhotosUI
 
 struct ImagePicker: UIViewControllerRepresentable {
     @Binding var selectedImages: [UIImage]
-    
+    let maxSelectionCount:Int
 
     func makeUIViewController(context: Context) -> PHPickerViewController {
         var configuration = PHPickerConfiguration()
         configuration.filter = .images
-        configuration.selectionLimit = 10 - selectedImages.count
+        configuration.selectionLimit = maxSelectionCount - selectedImages.count
 
         let picker = PHPickerViewController(configuration: configuration)
         picker.delegate = context.coordinator

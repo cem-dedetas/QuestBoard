@@ -230,14 +230,3 @@ enum StoringError: Error {
     case JWTStorageError
 }
 
-struct AuthResponse: Codable {
-    let data: String?
-    let message: String
-    let success: Bool
-}
-
-struct UserResponse: Codable {
-    let data: User?
-    let message: String
-    let success: Bool
-}

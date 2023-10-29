@@ -23,10 +23,12 @@ struct AdsListView: View {
                             
                                 ForEach(advertsViewModel.listings, id:\._id){ listing in
                                     NavigationLink{
-                                        AdDetailsView(adId: listing._id)
+                                        AdDetailsView(advert:listing)
                                     } label :{
                                         VStack {
-                                            CachedImageView(url: listing.imgURLs[0], width: proxy.size.width).background(.regularMaterial)
+                                            CachedImageView(url: listing.imgURLs.isEmpty ? "" : listing.imgURLs[0], width: proxy.size.width)
+                                                
+                                                .background(.regularMaterial)
                                                 .overlay(alignment:.bottomTrailing){
                                                     HStack{
                                                         EstimatedTimeView(from: listing.location2d)

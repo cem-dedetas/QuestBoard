@@ -24,7 +24,7 @@ struct MyAdsView: View {
                             List{
                                 ForEach(advertvm.listings, id:\.self._id){ad in
                                     NavigationLink{
-                                        AdDetailsView(adId:ad._id)
+                                        AdDetailsView(advert:ad)
                                     } label :{
                                         VStack(alignment: .leading){
                                             Text("\(ad.title)")

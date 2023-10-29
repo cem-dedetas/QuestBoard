@@ -1,6 +1,6 @@
 import Foundation
 
-struct Location: Codable {
+struct Location: Codable, Hashable {
     let lat: Double
     let lon: Double
     
@@ -10,13 +10,13 @@ struct Location: Codable {
     }
 }
 
-enum AdvertTypeEnum: Int, Codable,CaseIterable {
+enum AdvertTypeEnum: Int, Codable,CaseIterable, Hashable {
     case realEstate
     case vehicle
     case other
 }
 
-struct Address: Codable {
+struct Address: Codable, Hashable {
     let country:String
     let zipCode:String
     let city:String
@@ -24,7 +24,7 @@ struct Address: Codable {
     let rest:String
 }
 
-struct Advert: Codable{
+struct Advert: Codable, Hashable{
     let _id: String
     let title: String
     let adType: AdvertTypeEnum // Use the enum type here
@@ -36,6 +36,7 @@ struct Advert: Codable{
     let createdAt: String
     let location: Location
     let address: Address?
+    let patron : User
 
     // Provide an initializer for the Advert struct
     init(id: String, title: String, adType: AdvertTypeEnum, description: String, price: Int, email: String, imgURLs: [String], phone: String, createdAt: String, location: Location, address: Address? = nil) {
@@ -50,6 +51,7 @@ struct Advert: Codable{
         self.createdAt = createdAt
         self.location = location
         self.address = address
+        self.patron = User(name: "", email: "", profilePicUrl: "")
     }
 }
 

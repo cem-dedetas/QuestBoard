@@ -20,11 +20,21 @@ struct LoginRequest:Codable {
 }
 
 
-struct User: Codable {
+struct User: Codable, Hashable {
     let name: String
     let email: String
-    let salt: String
     let profilePicUrl: String
 }
 
+struct AuthResponse: Codable {
+    let data: String?
+    let message: String
+    let success: Bool
+}
+
+struct UserResponse: Codable {
+    let data: User?
+    let message: String
+    let success: Bool
+}
 

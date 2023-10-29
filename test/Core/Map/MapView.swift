@@ -117,7 +117,7 @@ struct MapView: View {
                     }
                     .navigationDestination(isPresented: $isAdDetailPresented){
                         if let ad = selectedMarker {
-                            AdDetailsView(adId: ad._id)
+                            AdDetailsView(advert:ad)
                         }
                     }.onChange(of:routeDisplaying){ previous, current in
                         if current, let marker = selectedMarker {
