@@ -11,7 +11,9 @@ import Foundation
 
 struct AdDetailsView: View {
     @State var advert:Advert
-    
+    @State var chat:Chat? = nil
+    @StateObject var chatsVM =  MultiChatViewModel()
+    @State var sendMessage = false
     func getDateFromString(_ dateString: String) -> Date? {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
@@ -90,16 +92,29 @@ struct AdDetailsView: View {
                     Divider()
                     Section{
                         Button{
-                            
+                            chatsVM.createChat(adId: advert._id) { result in
+                                
+                                switch(result){
+                                case .success(let resultChat):
+                                    self.chat = resultChat
+                                    self.sendMessage = true
+                                case .failure(let e):
+                                    print(e.localizedDescription)
+                                }
+                                
+                            }
                         } label : {
                             HStack {
-                                Text("Get in contact")
-                                Image(systemName: "phone")
+                                Text("Send a message")
                                 Image(systemName: "envelope")
                             }
                         }
                     }.padding()
                     Divider()
+                }.navigationDestination(isPresented: $sendMessage) {
+                    if let chat {
+                        ChatView(chat: chat, chatViewModel: SingleChatViewModel(chatId: chat.chatUUID))
+                    }
                 }
             
         

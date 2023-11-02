@@ -21,6 +21,7 @@ struct LoginRequest:Codable {
 
 
 struct User: Codable, Hashable {
+    let _id: String
     let name: String
     let email: String
     let profilePicUrl: String

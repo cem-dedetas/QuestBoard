@@ -10,7 +10,7 @@ import SwiftUI
 struct BottomNavTabComponent: View {
     @Binding var tabSelection : Int
     @Namespace var tabAnimationNamespace
-    var tabBarItems:[(image:String, title:String)]
+    let tabBarItems:[(image:String, title:String)]
     
     
     var body: some View {

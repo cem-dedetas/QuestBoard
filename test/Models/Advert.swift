@@ -51,7 +51,7 @@ struct Advert: Codable, Hashable{
         self.createdAt = createdAt
         self.location = location
         self.address = address
-        self.patron = User(name: "", email: "", profilePicUrl: "", favorites: [])
+        self.patron = User(_id:"",name: "", email: "", profilePicUrl: "", favorites: [])
         self.likeCount = 0
     }
 }
@@ -65,6 +65,19 @@ struct AdvertRequest: Codable {
     let phone: String
     let location: Location
     let address: Address
+}
+
+
+struct AdvertResponse: Decodable {
+    let data: [Advert]
+    let message: String
+    let success: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case data
+        case message
+        case success
+    }
 }
 
 public var enumStrings: [String] = ["Real Estate", "Vehicle","Other"]

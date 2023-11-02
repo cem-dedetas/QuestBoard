@@ -13,17 +13,12 @@ struct HomeView: View {
     var body: some View {
         TabView(selection: $tabSelection) {
             MapView().tag(1)
-            AdsListView().tag(2)
+//            AdsListView().tag(2)
             MyAdsView().tag(3)
             ProfileView().tag(4)
+            MessagesView().tag(2)
         }
-        .overlay(alignment:.bottom){
-            BottomNavTabComponent(tabSelection: $tabSelection ,tabBarItems:[("map","Map"),
-                                                                           ("list.bullet.indent","List"),
-                                                                           ("rectangle.stack.badge.person.crop","My Ads"),
-                                                                           ("person","Profile")])
-            
-        }
+        
     }
 }
 
