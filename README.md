@@ -60,219 +60,40 @@ git clone https://github.com/cem-dedetas/QuestBoard.git
 
 ## Usage
 
-### Screenshots
-#### Home
+## Screenshots
 
-<div style="display:flex margin-top:30px">
-<img src="Screenshots/home-dark-1.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-<img src="Screenshots/home-light-1.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-</div>
+### Home
+![Home Dark 1](Screenshots/home-dark-1.png) | ![Home Light 1](Screenshots/home-light-1.png)
+--- | ---
+![Home Dark 2](Screenshots/home-dark-2.png) | ![Home Light 2](Screenshots/home-light-2.png)
+![Home Dark 3](Screenshots/home-dark-3.png) | ![Home Light 3](Screenshots/home-light-3.png)
+![Home Dark 4](Screenshots/ads-search-dark-1.png) | ![Home Light 4](Screenshots/ads-search-light-1.png)
+### Profile
 
-<div style="display:flex margin-top:30px">
-<img src="Screenshots/home-dark-2.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-<img src="Screenshots/home-light-2.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-</div>
+![Profile Dark 1](Screenshots/settings-dark-1.png) | ![Profile Light 1](Screenshots/settings-light-1.png)
+--- | ---
 
-<div style="display:flex margin-top:30px">
-<img src="Screenshots/home-dark-3.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-<img src="Screenshots/home-light-3.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-</div>
+### Create Job
+![Create Dark 1](Screenshots/create-dark-1.png) | ![Create Light 1](Screenshots/create-light-1.png)
+--- | ---
+![Create Dark 2](Screenshots/create-dark-2.png) | ![Create Light 2](Screenshots/create-light-2.png)
+![Create Dark 3](Screenshots/create-dark-3.png) | ![Create Light 3](Screenshots/create-light-3.png)
+![Create Dark 4](Screenshots/create-dark-4.png) | ![Create Dark 5](Screenshots/create-dark-5.png)
 
-<div style="display:flex margin-top:30px">
-<img src="Screenshots/ads-search-dark-1.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-<img src="Screenshots/ads-search-light-1.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-</div>
+### Job Details
+![Ad Detail Dark 1](Screenshots/ad-detail-dark-1.png) | ![Ad Detail Light 1](Screenshots/ad-detail-light-1.png)
+--- | ---
+![Ad Detail Dark 2](Screenshots/ad-detail-dark-2.png) | ![Ad Detail Light 2](Screenshots/ad-detail-light-2.png)
 
+### Job List
+![My Ads Dark 1](Screenshots/my-ads-dark-1.png) | ![My Ads Light 1](Screenshots/my-ads-light-1.png)
+--- | ---
+![Favorites Dark 1](Screenshots/favorites-dark-1.png) | ![Favorites Light 1](Screenshots/favorites-light-1.png)
 
-#### Profile
-
-<div style="display:flex margin-top:30px">
-<img src="Screenshots/settings-dark-1.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-<img src="Screenshots/settings-light-1.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-</div>
-<div style="display:flex margin-top:30px">
-
-
-#### Create Job
-
-<div style="display:flex margin-top:30px">
-<img src="Screenshots/create-dark-1.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-<img src="Screenshots/create-light-1.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-</div>
-
-<div style="display:flex margin-top:30px">
-<img src="Screenshots/create-dark-2.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-<img src="Screenshots/create-light-2.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-</div>
-
-<div style="display:flex margin-top:30px">
-<img src="Screenshots/create-dark-3.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-<img src="Screenshots/create-light-3.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-</div>
-
-<div style="display:flex margin-top:30px">
-<img src="Screenshots/create-dark-4.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-<img src="Screenshots/create-dark-5.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-</div>
-
-
-#### Job Details
-
-<div style="display:flex margin-top:30px">
-<img src="Screenshots/ad-detail-dark-1.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-<img src="Screenshots/ad-detail-light-1.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-</div>
-
-<div style="display:flex margin-top:30px">
-<img src="Screenshots/ad-detail-dark-2.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-<img src="Screenshots/ad-detail-light-2.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-</div>
-
-#### Job List
-
-<div style="display:flex margin-top:30px">
-<img src="Screenshots/my-ads-dark-1.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-<img src="Screenshots/my-ads-light-1.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-</div>
-
-<div style="display:flex margin-top:30px">
-<img src="Screenshots/favorites-dark-1.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-<img src="Screenshots/favorites-light-1.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-</div>
-
-
-#### Chat
-
-<div style="display:flex margin-top:30px">
-<img src="Screenshots/chat-dark-1.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-<img src="Screenshots/chat-light-2.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-</div>
-
-
-<div style="display:flex margin-top:30px">
-<img src="Screenshots/chat-dark-2.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-<img src="Screenshots/chat-light-1.png" alt="Alt text" style="
-    max-height:500px;
-    width:auto;
-    height:auto;
-    margin-right:30px"/>
-</div>
+### Chat
+![Chat Dark 1](Screenshots/chat-dark-1.png) | ![Chat Light 2](Screenshots/chat-light-2.png)
+--- | ---
+![Chat Dark 2](Screenshots/chat-dark-2.png) | ![Chat Light 1](Screenshots/chat-light-1.png)
 
 
 ## Contributing
