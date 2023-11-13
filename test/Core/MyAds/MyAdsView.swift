@@ -12,8 +12,21 @@ struct MyAdsView: View {
     @State var isActive : Bool = false
     @State var displayedTab:String = "myads"
     var body: some View {
-        NavigationStack{
             VStack{
+                HStack{
+                    Text(displayedTab == "myads" ? "My Ads" : "Favorites" ).font(.largeTitle).bold()
+                    Spacer()
+                    if displayedTab == "myads" {
+                        Button{
+                            isActive.toggle()
+                        } label: {
+                            HStack{
+                                Text("Create")
+                                Image(systemName: "chevron.right")
+                            }
+                        }
+                    }
+                }.padding()
                 Picker("", selection: $displayedTab) {
                     Text("My Ads").tag("myads")
                     
@@ -36,7 +49,9 @@ struct MyAdsView: View {
                                 Text("Error: \(advertvm.errorMessage)")
                             }
                             else {
+                                
                                 List{
+                                    
                                     ForEach(advertvm.listings, id:\.self._id){ad in
                                         NavigationLink{
                                             AdDetailsView(advert:ad)
@@ -56,7 +71,7 @@ struct MyAdsView: View {
                         }
                     }
                     .padding(.bottom, 50)
-                    .navigationTitle("My Ads")
+                    
                         .onAppear {
                             // Fetch data when the view appears
                             advertvm.fetchData()
@@ -65,20 +80,10 @@ struct MyAdsView: View {
                     
                 Spacer()
             }
-            
-            .toolbar{
-                ToolbarItem{
-                    Button{
-                        isActive.toggle()
-                    } label: {
-                        Text("Create")
-                    }
-                }
-            }
             .navigationDestination(isPresented: $isActive){
                 CreateAdView(stackIsActive: $isActive)
             }
-        }
+        
         
         
     }

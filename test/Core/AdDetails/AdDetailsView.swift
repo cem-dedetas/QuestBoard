@@ -10,6 +10,7 @@ import MapKit
 import Foundation
 
 struct AdDetailsView: View {
+    @EnvironmentObject var authViewModel:AuthViewModel
     @State var advert:Advert
     @State var chat:Chat? = nil
     @StateObject var chatsVM =  MultiChatViewModel()
@@ -56,6 +57,18 @@ struct AdDetailsView: View {
                                 }.padding(.horizontal)
                             }
                         }
+                    }
+                    Divider()
+                    Section{
+                        VStack(alignment: .leading){
+                            Text("Advertiser").font(.headline)
+                        HStack{
+                            ProfilePicComponent(user: advert.patron, width: 50)
+                            
+                                
+                                Text(advert.patron.name)
+                            }
+                        }.padding(.horizontal)
                     }
                     Divider()
                     Section{
@@ -121,7 +134,14 @@ struct AdDetailsView: View {
     }
         .navigationBarTitle(advert.title)
         .navigationBarTitleDisplayMode(.inline)
-        }.padding(.bottom, 50)
+        .toolbar{
+            ToolbarItem(placement: .topBarTrailing) {
+                LikeButtonComponent(adId: advert._id, isFavorited:authViewModel.currentUser?.favorites.contains(where: { element in
+                    element == advert._id
+                }) ?? false )
+            }
+        }
+        }
         
     }
 }

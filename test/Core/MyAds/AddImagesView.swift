@@ -97,7 +97,6 @@ struct AddImagesView: View {
                 .foregroundStyle(.white)
                 .background(Color.accentColor)
                 .clipShape(Capsule())
-                .padding(.bottom, 70)
             
         }
         .sheet(isPresented: $isImagePickerPresented) {

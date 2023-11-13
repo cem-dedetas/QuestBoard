@@ -55,10 +55,12 @@
 		AE7990502AE9440B00631034 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE79904F2AE9440B00631034 /* ProfileView.swift */; };
 		AE8FB5222ACB243E002F607A /* MultiAdvertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8FB5212ACB243E002F607A /* MultiAdvertViewModel.swift */; };
 		AE93B55A2ACD829D00684710 /* SingleAdvertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE93B5592ACD829D00684710 /* SingleAdvertViewModel.swift */; };
+		AE94C0EC2AFA76E900EF121A /* Sliders in Frameworks */ = {isa = PBXBuildFile; productRef = AE94C0EB2AFA76E900EF121A /* Sliders */; };
 		AEBEBEC22ABACCA8005EAC71 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBEBEC12ABACCA8005EAC71 /* MapViewModel.swift */; };
 		AEBEBEC52ABAD031005EAC71 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBEBEC42ABAD031005EAC71 /* MapView.swift */; };
 		AECA4F382AC86666005E9E4A /* AdDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECA4F372AC86666005E9E4A /* AdDetailsView.swift */; };
 		AECA4F3A2AC86711005E9E4A /* CreateAdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECA4F392AC86711005E9E4A /* CreateAdView.swift */; };
+		AECCFDD52AF6692F005F4AB9 /* ProfilePicComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECCFDD42AF6692F005F4AB9 /* ProfilePicComponent.swift */; };
 		AED3E6062ABE01BA00E9AA3E /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED3E6052ABE01BA00E9AA3E /* HomeView.swift */; };
 		AED3E6092ABF24FE00E9AA3E /* DetailSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED3E6082ABF24FE00E9AA3E /* DetailSheetView.swift */; };
 		AED3E60B2AC06A9F00E9AA3E /* MyAdsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED3E60A2AC06A9F00E9AA3E /* MyAdsView.swift */; };
@@ -133,6 +135,7 @@
 		AEBEBEC42ABAD031005EAC71 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		AECA4F372AC86666005E9E4A /* AdDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdDetailsView.swift; sourceTree = "<group>"; };
 		AECA4F392AC86711005E9E4A /* CreateAdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAdView.swift; sourceTree = "<group>"; };
+		AECCFDD42AF6692F005F4AB9 /* ProfilePicComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePicComponent.swift; sourceTree = "<group>"; };
 		AED3E6052ABE01BA00E9AA3E /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		AED3E6082ABF24FE00E9AA3E /* DetailSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSheetView.swift; sourceTree = "<group>"; };
 		AED3E60A2AC06A9F00E9AA3E /* MyAdsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAdsView.swift; sourceTree = "<group>"; };
@@ -149,6 +152,7 @@
 				AE18DB742AF29C00005875F0 /* FirebaseDatabaseSwift in Frameworks */,
 				AE18DB722AF29C00005875F0 /* FirebaseDatabase in Frameworks */,
 				AE74747B2AB9C32A00845729 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
+				AE94C0EC2AFA76E900EF121A /* Sliders in Frameworks */,
 				AE74747D2AB9C32A00845729 /* FirebaseAuth in Frameworks */,
 				AE74747F2AB9C32A00845729 /* FirebaseFirestore in Frameworks */,
 				AE18DB762AF29C00005875F0 /* FirebaseStorage in Frameworks */,
@@ -294,6 +298,7 @@
 				AE5CC4392AD5A773005158DB /* FullscreenImageView.swift */,
 				AE30CCF32ADD760B007986EE /* EstimatedTimeView.swift */,
 				AEE30D972AEEEBE60017F5FB /* LikeButtonComponent.swift */,
+				AECCFDD42AF6692F005F4AB9 /* ProfilePicComponent.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -435,6 +440,7 @@
 				AE18DB712AF29C00005875F0 /* FirebaseDatabase */,
 				AE18DB732AF29C00005875F0 /* FirebaseDatabaseSwift */,
 				AE18DB752AF29C00005875F0 /* FirebaseStorage */,
+				AE94C0EB2AFA76E900EF121A /* Sliders */,
 			);
 			productName = test;
 			productReference = AE1B16E92AA5FB50006563F1 /* test.app */;
@@ -511,6 +517,7 @@
 			packageReferences = (
 				AE7474792AB9C32A00845729 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				AE23CD5D2ACEE4360012F50C /* XCRemoteSwiftPackageReference "iPhoneNumberField" */,
+				AE94C0EA2AFA76E900EF121A /* XCRemoteSwiftPackageReference "sliders" */,
 			);
 			productRefGroup = AE1B16EA2AA5FB50006563F1 /* Products */;
 			projectDirPath = "";
@@ -579,6 +586,7 @@
 				AE6A2D7F2AEFD27900CB9CA9 /* FavoriteAdsView.swift in Sources */,
 				AE72E1872AEAD4FE00133683 /* EditProfileView.swift in Sources */,
 				AED3E60B2AC06A9F00E9AA3E /* MyAdsView.swift in Sources */,
+				AECCFDD52AF6692F005F4AB9 /* ProfilePicComponent.swift in Sources */,
 				AE7474712AB879DE00845729 /* InputView.swift in Sources */,
 				AE4443422AD2EAB60073C6A1 /* AddImagesView.swift in Sources */,
 				AED3E60E2AC06DBC00E9AA3E /* Advert.swift in Sources */,
@@ -953,6 +961,14 @@
 				minimumVersion = 10.0.0;
 			};
 		};
+		AE94C0EA2AFA76E900EF121A /* XCRemoteSwiftPackageReference "sliders" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/timdubbins/sliders";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -995,6 +1011,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = AE7474792AB9C32A00845729 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestoreSwift;
+		};
+		AE94C0EB2AFA76E900EF121A /* Sliders */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AE94C0EA2AFA76E900EF121A /* XCRemoteSwiftPackageReference "sliders" */;
+			productName = Sliders;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

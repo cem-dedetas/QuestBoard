@@ -23,7 +23,6 @@ struct MapView: View {
     @State var route: MKRoute?
     
     var body: some View {
-        NavigationStack {
             Map(position: $mapCameraPosition, scope:mapScope){
                     UserAnnotation()
                     
@@ -73,9 +72,8 @@ struct MapView: View {
                     .overlay(alignment: .topTrailing){
                         VStack{
                             ZStack{
-                                Button{
-                                    print("test123")
-                                    routeDisplaying = false
+                                NavigationLink{
+                                    AdsListView()
                                 }label:{
                                     Image(systemName: "line.horizontal.3").resizable().padding(10).frame(width: 40,height: 40)
                                 }.background(Color(.secondarySystemBackground)).buttonBorderShape(.roundedRectangle).cornerRadius(5)
@@ -124,7 +122,8 @@ struct MapView: View {
                             getRoute(to: marker.location2d)
                         }
                     }
-        }
+                    .toolbar(.hidden)
+        
             
     }
     

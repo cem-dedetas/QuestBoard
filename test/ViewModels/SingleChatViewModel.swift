@@ -12,7 +12,6 @@ class SingleChatViewModel: ObservableObject {
     }
 
     func listenForMessages() {
-        print("trying to receive msg from \(chatId)")
         let messagesRef = db.collection("messaging").document("livemessages").collection(chatId)
             .order(by: "timestamp")
         

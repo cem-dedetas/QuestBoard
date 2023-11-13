@@ -10,15 +10,26 @@ import SwiftUI
 struct HomeView: View {
     
     @Binding var tabSelection:Int
+    let tabBarItems = [("map","Map"),
+                       ("bubble.left.and.bubble.right","Chat"),
+                       ("rectangle.stack.badge.person.crop","My Ads"),
+                       ("gearshape","Settings")]
+    
     var body: some View {
-        TabView(selection: $tabSelection) {
-            MapView().tag(1)
-//            AdsListView().tag(2)
-            MyAdsView().tag(3)
-            ProfileView().tag(4)
-            MessagesView().tag(2)
-        }
         
+        NavigationStack{
+            TabView(selection: $tabSelection) {
+                MapView().tag(1)
+    //            AdsListView().tag(2)
+                MyAdsView().tag(3)
+                ProfileView().tag(4)
+                MessagesView().tag(2)
+            }
+            .overlay(alignment:.bottom){
+                        BottomNavTabComponent(tabSelection: $tabSelection ,tabBarItems:tabBarItems)
+                        
+                    }
+        }
     }
 }
 

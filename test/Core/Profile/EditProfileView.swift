@@ -22,11 +22,12 @@ struct EditProfileView: View {
         
         VStack{
             Group{
-                if let imageUrl =  authViewModel.currentUser?.profilePicUrl, !imageUrl.isEmpty {
+                if let user =  authViewModel.currentUser{
                     Button{
                         isFullscreen = true
                     } label :{
-                            CachedImageView(url: imageUrl, width: 150).frame(height: 150).clipShape(Circle())
+//                            CachedImageView(url: imageUrl, width: 150).frame(height: 150).clipShape(Circle())
+                        ProfilePicComponent(user: user, width: 150)
                         
                     }
                     

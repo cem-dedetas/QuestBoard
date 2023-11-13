@@ -1,10 +1,11 @@
 import SwiftUI
+import _PhotosUI_SwiftUI
 import Firebase
 
 struct ChatView: View {
     let chat: Chat
     @EnvironmentObject var authViewModel: AuthViewModel
-    @StateObject var chatViewModel: SingleChatViewModel
+    @ObservedObject var chatViewModel: SingleChatViewModel
     @State var messageText = ""
 //    @State private var scrollToBottom = false
 
@@ -42,11 +43,20 @@ struct ChatView: View {
             // Compose and send messages
             MessageInputView(messageText: $messageText, sendMessage: sendMessage)
         }
-        .onAppear {
-            chatViewModel.listenForMessages()
-        }
-        .onDisappear {
-            chatViewModel.stopListening()
+        .navigationTitle(chat.users[0]._id == authViewModel.currentUser?._id ? chat.users[1].name : chat.users[0].name)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar{
+            ToolbarItem(placement: .topBarTrailing) {
+                NavigationLink {
+                    AdDetailsView(advert: chat.advert)
+                } label: {
+                    HStack{
+                        Text("Go to Ad")
+                        Image(systemName: "chevron.right")
+                    }
+                }
+
+            }
         }
     }
     
@@ -125,35 +135,79 @@ struct MessageBubbleView: View {
 
     func formattedTime(from timestamp: Timestamp) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm" // Set your desired time format
+        let calendar = Calendar.current
+        let currentDate = Date()
+        
+        // Check if the timestamp date is today
+        if calendar.isDateInToday(timestamp.dateValue()) {
+            dateFormatter.dateFormat = "HH:mm" // Set your desired time format
+        } else {
+            dateFormatter.dateFormat = "d MMM HH:mm" // Set day and month format
+        }
         
         let date = timestamp.dateValue()
         return dateFormatter.string(from: date)
     }
+
 }
 struct MessageInputView: View {
     @Binding var messageText: String
+    @State var isImagePickerPresented = false
+    @State var selectedImages:[UIImage] = []
     var sendMessage: () -> Void
 
     var body: some View {
-        HStack {
-            TextField("Type a message", text: $messageText)
-//                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding().onSubmit {
-                    sendMessage()
+        VStack{
+            ScrollView(.horizontal){
+                LazyHStack(spacing:25){
+                    ForEach(selectedImages, id:\.self){image in
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFit()
+                            .overlay(alignment: .topTrailing) {
+                                Button{
+                                    selectedImages.removeAll { _image in
+                                        _image == image
+                                    }
+                                } label: {
+                                    Image(systemName: "xmark.circle.fill").font(.title).tint(.red)
+                                }
+                            }
+                            .clipShape(RoundedRectangle(cornerRadius: 15))
+                            .frame(height:150)
+                            .containerRelativeFrame(.horizontal){width,axis  in
+                                width - 150
+                            }
+                            
+                    }
+                    
                 }
-
-            Button(action: sendMessage) {
-                Image(systemName: "paperplane")
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .clipShape(Circle())
+                .scrollTargetLayout()
             }
+            .scrollTargetBehavior(.viewAligned)
+            
+            HStack {
+                TextField("Type a message", text: $messageText)
+    //                .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding(.leading,5).onSubmit {
+                        sendMessage()
+                    }
+
+                Button{
+                    isImagePickerPresented.toggle()
+                } label: {
+                    Image(systemName: "paperclip").scaleEffect(1.2).padding(.horizontal)
+                }
+                Button(action: sendMessage) {
+                    Image(systemName: "paperplane").scaleEffect(1.2).padding(.trailing)
+                }
+            }
+            .sheet(isPresented: $isImagePickerPresented){
+                ImagePicker(selectedImages: $selectedImages, maxSelectionCount: 10).ignoresSafeArea(.all)
+                
+            }
+            .padding()
+            .background(.thickMaterial)
         }
-        .padding(.horizontal)
-        .background(.thickMaterial)
-        .clipShape(Capsule())
-        .padding(.bottom, 60)
     }
 }

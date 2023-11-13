@@ -17,7 +17,7 @@ struct CachedImageView: View {
                             .resizable()
                     }
                 )
-                .scaledToFit()
+                .scaledToFill()
                 .frame(width: width)
                 .background(Color.gray)
             )

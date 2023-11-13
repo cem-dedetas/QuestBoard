@@ -70,7 +70,6 @@ struct SelectLocationView: View {
                 }.frame(width: UIScreen.main.bounds.width - 36, height: 40)
                     .background(Color.accentColor)
                     .clipShape(Capsule())
-                    .padding(.bottom,50)
             }
         }.mapScope(selectLocationMapScope)
             .navigationTitle("Select Location")

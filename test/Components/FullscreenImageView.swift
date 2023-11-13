@@ -65,7 +65,7 @@ struct FullscreenImageView: View {
                     dismiss()
                 } label :{
                     Text("Dismiss")
-                }.padding(.bottom,50)
+                }
             }
     }
     

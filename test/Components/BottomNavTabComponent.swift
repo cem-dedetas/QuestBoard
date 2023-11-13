@@ -20,6 +20,7 @@ struct BottomNavTabComponent: View {
                 .foregroundStyle(.thickMaterial)
                 .shadow(radius: 9)
             HStack(spacing:1){
+                Spacer()
                 ForEach(0..<4){ index in
                     Button{
                         tabSelection = index + 1
@@ -44,9 +45,10 @@ struct BottomNavTabComponent: View {
                                     .foregroundColor(.clear)
                                     .offset(y:3)
                             }
-                        }.padding(.horizontal,25)
+                        }
                         .foregroundColor(index + 1 == tabSelection ? .blue : .gray)
                     }
+                    Spacer()
                 }
             }.frame(height:80)
                 .clipShape(RoundedRectangle(cornerRadius:36))

@@ -63,7 +63,7 @@ struct AddProfilePhotoView: View {
                         HStack{
                             Text("Use this image")
                         }.padding().background(Color.accentColor).clipShape(Capsule()).foregroundStyle(.white)
-                    }.padding(.bottom, 100)
+                    }
                 }
                 else{
                     Spacer()
@@ -79,7 +79,7 @@ struct AddProfilePhotoView: View {
                             Text("Select Image")
                             Image(systemName: "paperclip")
                         }
-                    }.padding(.bottom, 100)
+                    }
                 }
             }.sheet(isPresented: $isImagePickerPresented) {
                 ImagePicker(selectedImages: $selectedImages, maxSelectionCount: 1).ignoresSafeArea(.all)
